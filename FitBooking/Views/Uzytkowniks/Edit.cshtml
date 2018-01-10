@@ -1,0 +1,71 @@
+﻿@model Uzytkownik
+
+@{
+    ViewBag.Title = "Edytuj dane osobowe";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal" style="text-align:center; margin: 0 auto;">
+        <h2 style="text-align:center; margin-top:10px;">Edytuj dane osobowe</h2>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            IMIĘ
+            <div class="col-md-5 col-md-center">
+                @Html.EditorFor(model => model.imie, new { htmlAttributes = new { @class = "form-control", @style = "text-align:center;" } })
+                @Html.ValidationMessageFor(model => model.imie, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            NAZWISKO
+            <div class="col-md-5 col-md-center">
+                @Html.EditorFor(model => model.nazwisko, new { htmlAttributes = new { @class = "form-control", @style = "text-align:center;" } })
+                @Html.ValidationMessageFor(model => model.nazwisko, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            DATA URODZENIA
+            <div class="col-md-5 col-md-center">
+                @Html.EditorFor(model => model.data_urodzenia, new { htmlAttributes = new { @class = "form-control", @style = "text-align:center;" } })
+                @Html.ValidationMessageFor(model => model.data_urodzenia, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            EMAIL
+            <div class="col-md-5 col-md-center">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", @style = "text-align:center;" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            NUMER TELEFONU
+            <div class="col-md-5 col-md-center">
+                @Html.EditorFor(model => model.telefon, new { htmlAttributes = new { @class = "form-control", @style = "text-align:center;" } })
+                @Html.ValidationMessageFor(model => model.telefon, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-5 col-md-5 col-md-center">
+                <input type="submit" value="ZAPISZ" class="btn-primaryS" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

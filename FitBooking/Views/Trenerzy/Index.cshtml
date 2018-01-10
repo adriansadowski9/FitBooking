@@ -1,0 +1,50 @@
+﻿@*@model FitBooking.Models.ModelUserProfil*@
+@model IEnumerable<FitBooking.Models.ModelUserProfil>
+
+@{
+    ViewBag.Title = "Zaplanuj spotkanie";
+}
+
+<h2>Umów sie na spotkanie</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.user.imie)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user.nazwisko)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.user.Adres.ElementAtOrDefault(0).miasto)</th>
+        <th>
+            @Html.DisplayNameFor(model => model.rola)
+        </th>
+        <th>
+            @Html.Label("Kalendarz")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.user.imie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user.nazwisko)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.user.Adres.ElementAtOrDefault(0).miasto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.rola)
+            </td>
+            <td>
+              @Html.ActionLink("Kalendarz", "Index", "Spotkanies", new { id = item.user.Id },null)
+           </td>
+        </tr>
+    }
+
+</table>

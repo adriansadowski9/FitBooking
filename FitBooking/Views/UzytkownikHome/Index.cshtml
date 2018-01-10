@@ -1,0 +1,97 @@
+﻿@model FitBooking.Models.ModelUserProfil
+
+@{
+    ViewBag.Title = "Dane osobowe";
+}
+
+<h2 style="text-align:center;">Dane osobowe</h2>
+
+<div>
+    <table class="tableDane">
+        <tr>
+            <th>
+                <h5>Adres</h5>
+            </th>
+            <th>
+                <h5>Dane</h5>
+            </th>
+            <th>
+                <h5>Społeczność</h5>
+            </th>
+        </tr>
+        <tr>
+
+            <th>
+               
+                    <span>ULICA</span> <br />@Html.DisplayFor(model => model.adres.ulica)
+
+                    @Html.DisplayFor(model => model.adres.nr_domu)<br />
+
+                <span>KOD POCZTOWY</span> <br /> @Html.DisplayFor(model => model.adres.kod_pocztowy)<br />
+
+                <span>MIASTO</span> <br /> @Html.DisplayFor(model => model.adres.miasto)<br />
+
+                <span>PAŃSTWO</span> <br /> @Html.DisplayFor(model => model.adres.panstwo)<br /><br />
+                @{ try
+                    {
+                    @Html.ActionLink("Edytuj", "Edit", "Adres", new { id = Model.adres.Id }, new { @class = "btn btn-success" })
+                    }
+                    catch
+                    {
+                        Response.Redirect(@Url.Action("Create", "Adres"));
+                    } }
+
+
+            </th>
+            <th>
+
+                <span>IMIĘ I NAZWISKO</span> <br /> @Html.DisplayFor(model => model.user.imie) @Html.DisplayFor(model => model.user.nazwisko)   <br />
+
+                <span>DATA URODZENIA</span> <br /> @Html.DisplayFor(model => model.user.data_urodzenia)   <br />
+
+                <span>EMAIL</span>  <br /> @Html.DisplayFor(model => model.user.AspNetUsers.Email)   <br />
+
+                <span>NUMER TELEFONU</span>  <br /> @Html.DisplayFor(model => model.user.telefon)   <br /><br />
+
+                @{ try
+                    {
+                        @Html.ActionLink("Edytuj", "Edit", "Uzytkowniks", new { id = Model.user.Id }, new { @class = "btn btn-success" })
+                    }
+                    catch
+                    {
+                        Response.Redirect(@Url.Action("Create", "Uzytkowniks"));
+                    } }
+
+            </th>
+            <th>
+
+                <span>FACEBOOK</span> <br /> @Html.DisplayFor(model => model.spolecznosc.facebook)   <br />
+
+                <span>INSTAGRAM</span> <br /> @Html.DisplayFor(model => model.spolecznosc.instagram)   <br />
+
+                <span>SNAPCHAT</span> <br /> @Html.DisplayFor(model => model.spolecznosc.snapchat)   <br />
+
+                <span>TWITTER</span> <br /> @Html.DisplayFor(model => model.spolecznosc.twitter)   <br /><br />
+
+                @{ try
+                    {
+                        @Html.ActionLink("Edytuj", "Edit", "Spolecznosc", new { id = Model.spolecznosc.Id }, new { @class = "btn btn-success" })
+                    }
+                    catch
+                    {
+                        Response.Redirect(@Url.Action("Create", "Spolecznosc"));
+                    } }
+
+
+            </th>
+        </tr>
+    </table>
+</div>
+
+
+    @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+            @Html.ActionLink("Details", "Details", new { id = Model.Id })
+            @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+        </td>*@
+

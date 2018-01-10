@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Scripts.Render("~/Content/js")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/cssx")
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
+</head>
+<body>
+    <div class="nav-menu fixed-top bg-gradient">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-dark navbar-expand-lg">
+                        <a class="navbar-brand" href="~/"><img src="../images/logo.png" class="img-fluid" alt="logo"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+                        <div class="collapse navbar-collapse" id="navbar">
+                            <ul class="navbar-nav ml-auto navbar-right">
+                                <li class="nav-item"> <a class="nav-link" href="~/">STRONA GŁÓWNA</a> </li>
+                                <li class="nav-item"> <a class="nav-link" href="~/About">O NAS</a> </li>
+                                <li class="nav-item"> <a class="nav-link" href="~/Contact">KONTAKT </a></li>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="~/Account/Manage" title="Panel uzytkownika">PANEL UŻYTKOWNIKA</a></li>
+                                   }
+                                        else
+                                        {
+                                      <li class="nav-item"><a class="nav-link" href="~/Account/Login">LOGOWANIE</a></li>
+                                    <li class="nav-item"><a class="btn btn-outline-light my-3 my-sm-0 ml-lg-3" href="~/Account/Register">REJESTRACJA</a></li>
+                                }
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content" style="margin-top:100px;">
+        @RenderBody()
+        <hr />
+        <footer class="my-5 text-center">
+            <p class="mb-2"><small>Copyright 2018 by Adrian Sadowski  Adrianna Zelek  Hubert Stencelewski<br />All rights Reserved</small></p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

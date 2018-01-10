@@ -1,0 +1,50 @@
+﻿@model Lista_spotkan
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Lista_spotkan</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Spotkanie.opis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Spotkanie.opis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Uzytkownik.imie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Uzytkownik.imie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Uzytkownik1.imie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Uzytkownik1.imie)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

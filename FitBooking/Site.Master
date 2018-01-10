@@ -1,0 +1,91 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="FitBooking.SiteMaster" %>
+
+<!DOCTYPE html>
+
+<html lang="pl">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%: Page.Title %></title>
+    <asp:PlaceHolder runat="server">
+        <%: Scripts.Render("~/bundles/modernizr") %>
+        <%: Styles.Render("~/Content/cssx") %>
+        <%: Scripts.Render("~/Content/js") %>
+    </asp:PlaceHolder>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+        <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqP5ZE9AtLYKW3SLtCXP74nLlHuSBxFHY&libraries=places&language=pl"></script>
+</head>
+<body>
+
+    <form runat="server">
+        <asp:ScriptManager runat="server">
+            <Scripts>
+                <%--Aby dowiedzieć się więcej o skryptach grupowania w programie ScriptManager, zobacz https://go.microsoft.com/fwlink/?LinkID=301884 --%>
+                <%--Skrypty struktury--%>
+                <asp:ScriptReference Name="MsAjaxBundle" />
+                <asp:ScriptReference Name="jquery" />
+                <asp:ScriptReference Name="bootstrap" />
+                <asp:ScriptReference Name="respond" />
+                <asp:ScriptReference Name="WebForms.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebForms.js" />
+                <asp:ScriptReference Name="WebUIValidation.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebUIValidation.js" />
+                <asp:ScriptReference Name="MenuStandards.js" Assembly="System.Web" Path="~/Scripts/WebForms/MenuStandards.js" />
+                <asp:ScriptReference Name="GridView.js" Assembly="System.Web" Path="~/Scripts/WebForms/GridView.js" />
+                <asp:ScriptReference Name="DetailsView.js" Assembly="System.Web" Path="~/Scripts/WebForms/DetailsView.js" />
+                <asp:ScriptReference Name="TreeView.js" Assembly="System.Web" Path="~/Scripts/WebForms/TreeView.js" />
+                <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
+                <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
+                <asp:ScriptReference Name="WebFormsBundle" />
+                <%--Skrypty witryny--%>
+            </Scripts>
+        </asp:ScriptManager>
+ 
+      <div class="nav-menu fixed-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-dark navbar-expand-lg">
+                        <a class="navbar-brand" runat="server" href="~/"><img src="../images/logo.png" class="img-fluid" alt="logo"></a> <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span> </button>
+                        <div class="collapse navbar-collapse" id="navbar">
+                            <ul class="navbar-nav ml-auto navbar-right">
+                                <li class="nav-item"> <a class="nav-link" runat="server" href="~/">STRONA GŁÓWNA</a> </li>
+                                <li class="nav-item"> <a class="nav-link" runat="server" href="~/About">O NAS</a> </li>
+                                <li class="nav-item"> <a class="nav-link" runat="server" href="~/Contact">KONTAKT </a></li>
+                            <asp:LoginView runat="server" ViewStateMode="Disabled">
+                        <AnonymousTemplate>
+                                <li class="nav-item"><a class="nav-link" runat="server" href="~/Account/Login">LOGOWANIE</a></li>
+                                <li class="nav-item"><a class="btn btn-outline-light my-3 my-sm-0 ml-lg-3" runat="server" href="~/Account/Register">REJESTRACJA</a></li>
+                        </AnonymousTemplate>
+                        <LoggedInTemplate>
+                                <li class="nav-item"><a class="nav-link" runat="server" href="~/Account/Manage" title="Manage your account">PANEL UŻYTKOWNIKA</a></li>
+                                <li>
+                                    <asp:LoginStatus runat="server" CssClass="nav-link" LogoutAction="Redirect" LogoutText="WYLOGUJ" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                                </li>
+                            </ul>
+                        </LoggedInTemplate>
+                    </asp:LoginView>
+                                </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+        <header class="bg-gradient" id="home">
+        <asp:ContentPlaceHolder ID="HeaderContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </header>
+        <div class="container body-content">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            <hr />
+            <footer class="my-5 text-center">
+        <p class="mb-2"><small>Copyright 2018 by Adrian Sadowski  Adrianna Zelek  Hubert Stencelewski<br />All rights Reserved</small></p>
+    </footer>
+            </form>
+        </div>
+</body>
+</html>

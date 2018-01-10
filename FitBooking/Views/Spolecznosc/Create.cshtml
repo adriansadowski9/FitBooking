@@ -1,0 +1,66 @@
+﻿@model Spolecznosc
+
+@{
+    ViewBag.Title = "Dodaj portale społecznościowe";
+}
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal"style="text-align:center; margin: 0 auto;">
+        <h2 style="text-align:center; margin-top:10px;">Dodaj portale społecznościowe</h2>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                FACEBOOK<br />
+                <div class="col-md-5 col-md-center">
+                    @Html.EditorFor(model => model.facebook, new { htmlAttributes = new { @class = "form-control", @style = "text-align:center;" } })
+                    @Html.ValidationMessageFor(model => model.facebook, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                INSTAGRAM<br />
+                <div class="col-md-5 col-md-center">
+                    @Html.EditorFor(model => model.instagram, new { htmlAttributes = new { @class = "form-control", @style = "text-align:center;" } })
+                    @Html.ValidationMessageFor(model => model.instagram, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                SNAPCHAT<br />
+                <div class="col-md-5 col-md-center">
+                    @Html.EditorFor(model => model.snapchat, new { htmlAttributes = new { @class = "form-control", @style = "text-align:center;" } })
+                    @Html.ValidationMessageFor(model => model.snapchat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                TWITTER<br />
+                <div class="col-md-5 col-md-center">
+                    @Html.EditorFor(model => model.twitter, new { htmlAttributes = new { @class = "form-control", @style = "text-align:center;" } })
+                    @Html.ValidationMessageFor(model => model.twitter, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.id_uzytkownik, "id_uzytkownik", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("id_uzytkownik", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.id_uzytkownik, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+            <div class="form-group">
+                <div class="col-md-offset-5 col-md-5 col-md-center">
+                    <input type="submit" value="DODAJ" class="btn-primaryS" />
+                </div>
+            </div>
+</div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
