@@ -29,8 +29,8 @@ public partial class Uzytkownik
     [Required(ErrorMessage = "Proszê wybraæ datê urodzenia")]
     [DisplayName("data urodzenia")]
     public string data_urodzenia { get; set; }
-    [Required(ErrorMessage = "Proszê wprowadziæ e-mail")]
-    [RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Nieprawid³owy format email")]
+   // [Required(ErrorMessage = "Proszê wprowadziæ e-mail")]
+    //[RegularExpression("^[a-zA-Z0-9_\\.-]+@([a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$", ErrorMessage = "Nieprawid³owy format email")]
     public string email { get; set; }
     [DataType(DataType.PhoneNumber)]
     [RegularExpression(@"^([0-9]{9})|(([0-9]{3}-){2}[0-9]{3})$", ErrorMessage = "B³¹d, numer telefonu powinien sk³adaæ siê tylko z cyfr")]

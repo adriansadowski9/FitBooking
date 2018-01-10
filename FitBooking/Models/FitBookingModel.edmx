@@ -12,12 +12,13 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ulica" Type="varchar" MaxLength="50" />
           <Property Name="nr_domu" Type="char" MaxLength="10" />
+          <Property Name="nr_mieszkania" Type="char" MaxLength="10" />
           <Property Name="kod_pocztowy" Type="char" MaxLength="10" />
           <Property Name="miasto" Type="varchar" MaxLength="100" />
           <Property Name="panstwo" Type="varchar" MaxLength="100" />
           <Property Name="id_uzytkownik" Type="int" />
-          <Property Name="szerokosc" Type="decimal" Precision="18" Scale="0" />
-          <Property Name="dlugosc" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="szerokosc" Type="varchar" MaxLength="50" />
+          <Property Name="dlugosc" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -512,8 +513,9 @@
           <Property Name="panstwo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="id_uzytkownik" Type="Int32" />
           <NavigationProperty Name="Uzytkownik" Relationship="Self.FK_Adres_Uzytkownik" FromRole="Adres" ToRole="Uzytkownik" />
-          <Property Name="szerokosc" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="dlugosc" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="szerokosc" Type="String" Unicode="false" FixedLength="false" MaxLength="50" />
+          <Property Name="dlugosc" Type="String" Unicode="false" FixedLength="false" MaxLength="50" />
+          <Property Name="nr_mieszkania" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -997,6 +999,7 @@
           <EntitySetMapping Name="Adres">
             <EntityTypeMapping TypeName="Model.Adres">
               <MappingFragment StoreEntitySet="Adres">
+                <ScalarProperty Name="nr_mieszkania" ColumnName="nr_mieszkania" />
                 <ScalarProperty Name="dlugosc" ColumnName="dlugosc" />
                 <ScalarProperty Name="szerokosc" ColumnName="szerokosc" />
                 <ScalarProperty Name="Id" ColumnName="Id" />

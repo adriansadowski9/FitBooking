@@ -34,8 +34,11 @@ public partial class Adres
     [RegularExpression(@"^[0-9A-ZĄĘŁŃÓŚŹŻ]+[0-9a-zA-ZąćęłńóśźżĄĘŁŃÓŚŹŻ''-'\s]*$", ErrorMessage = "Błąd, wyrażenie powinno składać się tylko z liter")]
     public string panstwo { get; set; }
     public Nullable<int> id_uzytkownik { get; set; }
-    public Nullable<decimal> szerokosc { get; set; }
-    public Nullable<decimal> dlugosc { get; set; }
+    public string szerokosc { get; set; }
+    public string dlugosc { get; set; }
+    public string nr_mieszkania { get; set; }
+
+
 
 
     public virtual Uzytkownik Uzytkownik { get; set; }
