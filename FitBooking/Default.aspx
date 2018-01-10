@@ -20,7 +20,7 @@
           </div>
   </div>
 </div>
-        <div class="img-holder mt-3"><img src="images/toskafki.png" alt="phone" class="img-fluid"></div>
+        <div class="img-holder mt-3"></div>
         </div>
   </asp:Content>
 
