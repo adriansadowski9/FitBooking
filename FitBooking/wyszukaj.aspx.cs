@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Xml.Linq;
+using FitBooking.CsScripts;
 
 namespace FitBooking
 {
@@ -13,8 +14,11 @@ namespace FitBooking
     {
         private string szerokosc;
         private string dlugosc;
+        private double szerokoscDouble;
+        private double dlugoscDouble;
         private string typ;
         private string adres;
+        private double odleglosc;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(Request.QueryString["adres"]) && !String.IsNullOrEmpty(Request.QueryString["typwyszukania"]))
@@ -34,6 +38,22 @@ namespace FitBooking
 
                 szerokosc = (string)lat;
                 dlugosc = (string)lng;
+
+                szerokoscDouble = Convert.ToDouble(szerokosc.Replace('.', ','));
+                dlugoscDouble = Convert.ToDouble(dlugosc.Replace('.', ','));
+
+                /*var distance = new Coordinates(Convert.ToDouble(szerokosc), Convert.ToDouble(dlugosc))
+                .DistanceTo(new Coordinates(48.237867, 16.389477),UnitOfLength.Kilometers);*/
+
+                var distance = new Coordinates(54.3186888, 18.5676637)
+                .DistanceTo(
+                    new Coordinates(szerokoscDouble, dlugoscDouble),
+                    UnitOfLength.Kilometers
+                );
+
+                odleglosc = distance;
+
+
             }
 
             else
@@ -46,5 +66,6 @@ namespace FitBooking
         public string Dlugosc { get { return dlugosc; } }
         public string Typ { get { return typ; } }
         public string Adres { get { return adres; } }
+        public double Odleglosc { get { return odleglosc; } }
     }
 }

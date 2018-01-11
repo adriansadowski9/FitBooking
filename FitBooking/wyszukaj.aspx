@@ -5,6 +5,7 @@
         Adres: <%=Adres %><br />
         Szerokość geograficzna: <%=Szerokosc %><br />
         Długość geograficzna: <%=Dlugosc %><br />
-        Typ wyszukania: <%=Typ %>
+        Typ wyszukania: <%=Typ %><br />
+        Dystans: <%=Odleglosc %> km.
     </div>
 </asp:Content>

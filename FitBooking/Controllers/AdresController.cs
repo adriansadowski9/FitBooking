@@ -69,7 +69,19 @@ namespace FitBooking.Controllers
                 }
                 else
                 {
+                    string requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(adres.ulica+"+"+adres.nr_domu+"+"+adres.kod_pocztowy+"+"+adres.miasto+"+"+adres.panstwo));
 
+                    WebRequest request = WebRequest.Create(requestUri);
+                    WebResponse response = request.GetResponse();
+                    XDocument xdoc = XDocument.Load(response.GetResponseStream());
+
+                    XElement result = xdoc.Element("GeocodeResponse").Element("result");
+                    XElement locationElement = result.Element("geometry").Element("location");
+                    XElement lat = locationElement.Element("lat");
+                    XElement lng = locationElement.Element("lng");
+
+                    adres.szerokosc = (string)lat;
+                    adres.dlugosc = (string)lng;
 
                     adres.id_uzytkownik = p.Id;
                     db.Adres.Add(adres);
@@ -112,6 +124,20 @@ namespace FitBooking.Controllers
                 var u = db.AspNetUsers.SingleOrDefault(x => x.Email == User.Identity.Name);
                 Uzytkownik p = db.Uzytkownik.SingleOrDefault(x => x.id_aspUser == u.Id);
                 adres.id_uzytkownik = p.Id;
+
+                string requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(adres.ulica+"+"+adres.nr_domu+"+"+adres.kod_pocztowy+"+"+adres.miasto+"+"+adres.panstwo));
+
+                    WebRequest request = WebRequest.Create(requestUri);
+                    WebResponse response = request.GetResponse();
+                    XDocument xdoc = XDocument.Load(response.GetResponseStream());
+
+                    XElement result = xdoc.Element("GeocodeResponse").Element("result");
+                    XElement locationElement = result.Element("geometry").Element("location");
+                    XElement lat = locationElement.Element("lat");
+                    XElement lng = locationElement.Element("lng");
+
+                    adres.szerokosc = (string)lat;
+                    adres.dlugosc = (string)lng;
 
 
                 db.Entry(adres).State = EntityState.Modified;

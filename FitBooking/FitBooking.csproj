@@ -641,6 +641,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\TrenerzyController.cs" />
+    <Compile Include="CsScripts\Coordinates.cs" />
     <Compile Include="Models\UserRoleInfo.cs" />
     <Compile Include="wyszukaj.aspx.cs">
       <DependentUpon>wyszukaj.aspx</DependentUpon>
