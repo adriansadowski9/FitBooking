@@ -6,6 +6,10 @@
         Szerokość geograficzna: <%=Szerokosc %><br />
         Długość geograficzna: <%=Dlugosc %><br />
         Typ wyszukania: <%=Typ %><br />
-        Dystans: <%=Odleglosc %> km.
+        
+        Sprawdzamy:<br />
+        <%=HtmlText %><br />
+
+
     </div>
 </asp:Content>
