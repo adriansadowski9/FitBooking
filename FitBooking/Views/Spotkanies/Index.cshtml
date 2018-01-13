@@ -1,13 +1,28 @@
-﻿
+﻿@model FitBooking.Models.ModelCaledar
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Kalendarz";
    
 }
 
-<h2>Index</h2>
-
+<h3 style="margin-left:100px">@Html.DisplayFor(model => model.funkcyjna.imie) @Html.DisplayFor(model => model.funkcyjna.nazwisko)</h3>
 <div style="height:700px;width:900px;margin:0 auto">
-    @Html.Raw(Model.Render())
+   
+    @*@Html.Raw(Model.Render())*@
+    @Html.Raw(Model.scheduler.Render())
 </div>
-    
+@*/@using (Html.BeginForm("", "Kalendarz", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{*@
+<form method="post" action="@Url.Action("Wyslij")">
+    <br />
+    <h4>Zarezerwuj termin</h4>
+    <p>Wybierz termin</p>
+    <p>@Html.DropDownList("spotkanieID", "--Termin--")</p>
+    <p>Wiadomość</p>
+    <p>@Html.TextBox("Wiadomość", null, new { style = "width:300px; height:200px;  text-decoration: none; text-align: left; padding: 1px;" })</p>
+    @Html.HiddenFor(x => x.klient.email, "mailKlient")
+    @Html.HiddenFor(x => x.funkcyjna.email, "mailFunkcyjny")
+   
+    <input type="submit" value="Submit">
+    </form>
+

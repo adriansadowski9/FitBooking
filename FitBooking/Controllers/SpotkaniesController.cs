@@ -32,7 +32,16 @@ namespace FitBooking.Controllers
                 Uzytkownik p = db.Uzytkownik.SingleOrDefault(k => k.id_aspUser == u.Id);
                 return p;
             }
-           else return null; 
+            else return null;
+
+        }
+
+        Uzytkownik getUserID(int? id)
+        {
+
+            //var u = db.AspNetUsers.SingleOrDefault(x => x.Email == User.Identity.Name);
+            Uzytkownik p = db.Uzytkownik.SingleOrDefault(k => k.Id == id);
+            return p;
 
         }
         string rolaUser()
@@ -53,10 +62,10 @@ namespace FitBooking.Controllers
                         return user.Roles.FirstOrDefault();
 
                 }
-                return null; 
+                return null;
             }
             else
-            return null;
+                return null;
         }
 
         public string changeColor(string status)
@@ -72,6 +81,7 @@ namespace FitBooking.Controllers
         // GET: Spotkanies
         public ActionResult Index(int? id)
         {
+            ModelCaledar kalendarz = new ModelCaledar();
 
             var scheduler = new DHXScheduler(this);
             scheduler.Extensions.Add(SchedulerExtensions.Extension.ActiveLinks);
@@ -98,15 +108,13 @@ namespace FitBooking.Controllers
 
             // scheduler.AfterInit.Add("block_readonly();");
             //var idl = id;
-            int? idZalogowanego=null; 
-            if (rolaUser() != null) idZalogowanego = getUser().Id; 
-            
-                if (rolaUser() == "klient"  || rolaUser()==null) // dla klienta i nie zalogowanego uzytkownika
-                {
-                // scheduler.Config.isReadonly = true;
-            
-               
+            int? idZalogowanego = null;
+            if (rolaUser() != null) idZalogowanego = getUser().Id;
 
+            if (rolaUser() == "klient" && id != null && id != idZalogowanego) // dla klienta i nie zalogowanego uzytkownika
+            {
+                kalendarz.klient = getUser();
+                kalendarz.funkcyjna = getUserID(id);
             }
             if (rolaUser() == "trener" || rolaUser() == "dietetyk")
             {
@@ -124,34 +132,78 @@ namespace FitBooking.Controllers
                     select.AddOptions(items);
                     scheduler.Lightbox.Add(select);
                     scheduler.Lightbox.Add(new LightboxTime("time", "Data"));
-                    scheduler.Config.isReadonly = false; 
+                    scheduler.Config.isReadonly = false;
+                    if (id == null)
+                    {
+                        kalendarz.funkcyjna = getUser();
+                        List<Spotkanie> pom = new List<Spotkanie>();
+                        var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
+                        foreach (Lista_spotkan sp in spotkania)
+                        {
+                            pom.Add(sp.Spotkanie);
+
+                        }
+                        kalendarz.lista = pom;
+
+
+                    }
+                    else
+                    {
+                        kalendarz.funkcyjna = getUserID(id);
+                        var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
+
+                        foreach (Lista_spotkan sp in spotkania)
+                        {
+                            kalendarz.lista.Add(sp.Spotkanie);
+
+                        }
+
+
+                    }
 
                 }
             }
             else // czyli inny trener wchodzi na konto innego trenerea to co klient 
             {
-               
-               scheduler.Config.readonly_form= true;
+
+                scheduler.Config.readonly_form = true;
             }
 
-            idl = id; 
-            return View(scheduler);
+
+            idl = id;
+            kalendarz.scheduler = scheduler;
+
+            var stands =
+       kalendarz.lista
+         .Where(s => s.color == "#baed91" && s.data_start > DateTime.Now)
+         .Select(s => new
+         {
+             Id = s.Id,
+             Description = string.Format("{0}-{1}", s.data_start.Value.ToString("MM/dd/yyyy HH:mm"), s.data_koniec.Value.TimeOfDay.ToString(@"hh\:mm"))
+         })
+         .ToList();
+
+            ViewBag.spotkanieID = new SelectList(stands, "Id", "Description");
+
+
+            return View(kalendarz);
         }
 
-        
-         
 
-       // [Authorize(Roles = "dietetyk,tener")]
+
+
+
+        // [Authorize(Roles = "dietetyk,tener")]
         public ContentResult Data()
         {
 
-           var id = idl;
-          dynamic s;
-           
+            var id = idl;
+            dynamic s;
+
             var u = db.AspNetUsers.SingleOrDefault(x => x.Email == User.Identity.Name);
             Uzytkownik p = db.Uzytkownik.SingleOrDefault(k => k.id_aspUser == u.Id);
             List<Spotkanie> apps = new List<Spotkanie>();
-            List<dynamic> lista= new List<dynamic>(); ;
+            List<dynamic> lista = new List<dynamic>(); ;
             int? idZalogowanego = getUser().Id;
 
 
@@ -197,20 +249,20 @@ namespace FitBooking.Controllers
             return data;
         }
 
-       
+
 
         public ContentResult Save(int? id, FormCollection actionValues)
         {
             var action = new DataAction(actionValues);
-            
+
             // actionVa
             try
             {
-               
+
                 var changedEvent = (Spotkanie)DHXEventsHelper.Bind(typeof(Spotkanie), actionValues);
-               
+
                 switch (action.Type)
-                {  
+                {
                     case DataActionTypes.Insert:
                         var status = actionValues["status"].ToString();
                         changedEvent.color = changeColor(status);
@@ -228,8 +280,8 @@ namespace FitBooking.Controllers
 
                         break;
                     case DataActionTypes.Delete:
-                        
-                        var instance = db.Spotkanie.FirstOrDefault(o => o.Id== id);
+
+                        var instance = db.Spotkanie.FirstOrDefault(o => o.Id == id);
                         var deletedL = db.Lista_spotkan.FirstOrDefault(m => m.id_spotkanie == instance.Id);
 
                         if (instance != null)
@@ -246,14 +298,14 @@ namespace FitBooking.Controllers
                         var statusE = actionValues["status"].ToString();
                         changedEvent.color = changeColor(statusE);
                         db.Entry(changedEvent).State = EntityState.Modified;
-                          db.SaveChanges();
+                        db.SaveChanges();
 
-                          var editL = db.Lista_spotkan.FirstOrDefault(m => m.id_spotkanie == id);
+                        var editL = db.Lista_spotkan.FirstOrDefault(m => m.id_spotkanie == id);
                         if (id != getUser().Id) editL.id_klient = getUser().Id;
-                          editL.status = statusE; 
-                          db.Entry(editL).State = EntityState.Modified;
-                          db.SaveChanges();
-                        
+                        editL.status = statusE;
+                        db.Entry(editL).State = EntityState.Modified;
+                        db.SaveChanges();
+
                         break;
                 }
                 //data.SubmitChanges();
@@ -263,13 +315,28 @@ namespace FitBooking.Controllers
             {
                 action.Type = DataActionTypes.Error;
             }
-           
-            
+
+
 
             return (new AjaxSaveResponse(action));
         }
 
 
+ 
+        [HttpPost]
+        public ActionResult wyslij(FormCollection collection)
+        {
+            
+            var c = collection[0];
+            var a = collection[1]; // wiadomosc
+            var b = collection[2]; //mejl klient
+            var s = collection[3]; //mej; funl
+
+
+            return View();
+
+
+        }
     }
 }
 
