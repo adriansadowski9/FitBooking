@@ -16,7 +16,7 @@
             <div class="form-horizontal">
                 <h4 style="text-align: center;">Informacje o spotkaniach</h4>
                 <div style="margin-top:25px;text-align: center">
-                <asp:HyperLink NavigateUrl="/Account/ManagePassword" cssClass="btn-primaryS" Text="Kalendarz" Visible="True" runat="server" />
+                <asp:HyperLink NavigateUrl="/Kalendarz" cssClass="btn-primaryS" Text="Kalendarz" Visible="True" runat="server" />
                     </div>
                 <h4 style="text-align: center; margin-top:25px;">Edycja ustawień konta</h4>
                 <div style="margin-top:25px;text-align: center">

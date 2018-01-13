@@ -222,6 +222,8 @@
     <Content Include="App_Data\aspnet-FitBooking-20171107114917_log.ldf">
       <DependentUpon>aspnet-FitBooking-20171107114917.mdf</DependentUpon>
     </Content>
+    <Content Include="Scripts\scheduler-client.js" />
+    <Content Include="Scripts\scheduler.config.js" />
     <Content Include="wyszukaj.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />

@@ -17,40 +17,58 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace FitBooking.Controllers
 {
+    [RoutePrefix("Kalendarz")]
     public class SpotkaniesController : Controller
     {
         private Entities3 db = new Entities3();
-        public static int? idl; 
+        public static int? idl;
 
 
         Uzytkownik getUser()
         {
-            var u = db.AspNetUsers.SingleOrDefault(x => x.Email == User.Identity.Name);
-            Uzytkownik p = db.Uzytkownik.SingleOrDefault(k => k.id_aspUser == u.Id);
-            return p; 
+            if (Request.IsAuthenticated == true)
+            {
+                var u = db.AspNetUsers.SingleOrDefault(x => x.Email == User.Identity.Name);
+                Uzytkownik p = db.Uzytkownik.SingleOrDefault(k => k.id_aspUser == u.Id);
+                return p;
+            }
+           else return null; 
 
         }
         string rolaUser()
         {
-            ApplicationDbContext db1 = new ApplicationDbContext();
-            var listOfUsers = (from u in db1.Users
-                               let query = (from ur in db1.Set<IdentityUserRole>()
-                                            where ur.UserId.Equals(u.Id)
-                                            join r in db1.Roles on ur.RoleId equals r.Id
-                                            select r.Name)
-                               select new UserRoleInfo() { User = u, Roles = query.ToList<string>() })
-                             .ToList();
-            foreach (UserRoleInfo user in listOfUsers)
+            if (Request.IsAuthenticated == true)
             {
-                if (getUser().id_aspUser == user.User.Id)
-                    return user.Roles.FirstOrDefault();
+                ApplicationDbContext db1 = new ApplicationDbContext();
+                var listOfUsers = (from u in db1.Users
+                                   let query = (from ur in db1.Set<IdentityUserRole>()
+                                                where ur.UserId.Equals(u.Id)
+                                                join r in db1.Roles on ur.RoleId equals r.Id
+                                                select r.Name)
+                                   select new UserRoleInfo() { User = u, Roles = query.ToList<string>() })
+                                 .ToList();
+                foreach (UserRoleInfo user in listOfUsers)
+                {
+                    if (getUser().id_aspUser == user.User.Id)
+                        return user.Roles.FirstOrDefault();
 
+                }
+                return null; 
             }
-            return "null";
+            else
+            return null;
         }
-            
+
+        public string changeColor(string status)
+        {
+            if (status == "dostepne") return "#baed91";
+            else if (status == "zarezerwowane") return "#fea3aa";
+            else return "#8CD1E6";
+
+        }
 
 
+        [Route("")]
         // GET: Spotkanies
         public ActionResult Index(int? id)
         {
@@ -60,10 +78,10 @@ namespace FitBooking.Controllers
             scheduler.Extensions.Add(SchedulerExtensions.Extension.Limit);
             scheduler.Extensions.Add(SchedulerExtensions.Extension.Collision);
             scheduler.Extensions.Add(SchedulerExtensions.Extension.Readonly);
-            
+
             scheduler.Extensions.Add("../scheduler.config.js");
             scheduler.Extensions.Add("../scheduler-client.js");
-           // scheduler.AfterInit.Add("readonlyEvents();");
+            // scheduler.AfterInit.Add("readonlyEvents();");
             scheduler.BeforeInit.Add("init();");
             scheduler.BeforeInit.Add("readonlyEvents();");
             // scheduler.Extensions.Add("../scheduler-client.js");
@@ -75,119 +93,105 @@ namespace FitBooking.Controllers
             scheduler.LoadData = true;
             scheduler.EnableDataprocessor = true;
             scheduler.UpdateFieldsAfterSave();
-            
+            scheduler.Config.isReadonly = true;
+
 
             // scheduler.AfterInit.Add("block_readonly();");
+            //var idl = id;
+            int? idZalogowanego=null; 
+            if (rolaUser() != null) idZalogowanego = getUser().Id; 
+            
+                if (rolaUser() == "klient"  || rolaUser()==null) // dla klienta i nie zalogowanego uzytkownika
+                {
+                // scheduler.Config.isReadonly = true;
+            
+               
 
-
-            if (getUser().Id == id)
+            }
+            if (rolaUser() == "trener" || rolaUser() == "dietetyk")
             {
 
-                scheduler.Lightbox.Add(new LightboxText("text", "Opis") { Height = 42, Focus = true });
-                var select = new LightboxSelect("status", "status");
-                var items = new List<object>(){
+                if (idZalogowanego == id || id == null)
+                {
+
+                    scheduler.Lightbox.Add(new LightboxText("text", "Opis") { Height = 42, Focus = true });
+                    var select = new LightboxSelect("status", "status");
+                    var items = new List<object>(){
                          new { key = "dostepne", label = "dostepne" },
                          new { key = "zarezerwowane", label = "zarezerwowane"},
                          new { key = "inne", label = "inne" }
                         };
-                select.AddOptions(items);
-                scheduler.Lightbox.Add(select);
-                scheduler.Lightbox.Add(new LightboxTime("time", "Data"));
-               
-                //  scheduler.DataAction
+                    select.AddOptions(items);
+                    scheduler.Lightbox.Add(select);
+                    scheduler.Lightbox.Add(new LightboxTime("time", "Data"));
+                    scheduler.Config.isReadonly = false; 
 
+                }
             }
-            else
+            else // czyli inny trener wchodzi na konto innego trenerea to co klient 
             {
-                //scheduler.Lightbox.
-                
-                scheduler.Lightbox.Add(new LightboxText("text", "Opis") { Height = 42, Focus = true });
-                var select = new LightboxSelect("status", "status");
-                var items = new List<object>(){
-                         new { key = "dostepne", label = "dostepne" },
-                         new { key = "zarezerwowane", label = "zarezerwuj"},
-                       //  new { key = "inne", label = "inne" }
-                        };
-                select.AddOptions(items);
-                scheduler.Lightbox.Add(select);
-               // scheduler.Lightbox.Add(new LightboxTime("time", "Data"));
-
-
+               
+               scheduler.Config.readonly_form= true;
             }
 
-            //scheduler.Config.isReadonly = true;
             idl = id; 
-
-
             return View(scheduler);
         }
-        
-            public string changeColor(string status)
-        {
-            if (status == "dostepne") return "#baed91";
-            else if (status == "zarezerwowane") return "#fea3aa";
-            else return "#8CD1E6";
 
-        }
+        
+         
 
        // [Authorize(Roles = "dietetyk,tener")]
         public ContentResult Data()
         {
-            
-            var id = idl;
+
+           var id = idl;
           dynamic s;
            
             var u = db.AspNetUsers.SingleOrDefault(x => x.Email == User.Identity.Name);
             Uzytkownik p = db.Uzytkownik.SingleOrDefault(k => k.id_aspUser == u.Id);
             List<Spotkanie> apps = new List<Spotkanie>();
             List<dynamic> lista= new List<dynamic>(); ;
-          
-            if (id==p.Id) // dla wlasciciela
+            int? idZalogowanego = getUser().Id;
+
+
+
+
+            if (rolaUser() == "klient" && id == null) // kalendarz klienta 
             {
-              
-                //jakas autoryzacja by sie przdala 
-                if (rolaUser()=="klient")
+                id = idZalogowanego;
+                var spotkania = db.Lista_spotkan.Where(x => x.id_klient == p.Id).ToList();
+                foreach (Lista_spotkan sp in spotkania)
                 {
-                   var spotkania = db.Lista_spotkan.Where(x => x.id_klient == p.Id).ToList();
-                    foreach (Lista_spotkan sp in spotkania)
-                    {
-                        s = new { id = sp.Spotkanie.Id, start_date = sp.Spotkanie.data_start, end_date = sp.Spotkanie.data_koniec, text = sp.Spotkanie.opis, color = sp.Spotkanie.color, @readonly = false };
-
-                        lista.Add(s);
-                    }
-
+                    s = new { id = sp.Spotkanie.Id, start_date = sp.Spotkanie.data_start, end_date = sp.Spotkanie.data_koniec, text = sp.Spotkanie.opis, color = sp.Spotkanie.color, @readonly = false };
+                    lista.Add(s);
                 }
-                else
-                {  // czyli to bedzie klient, gorzej jak jesest trenerem kotry chce sie umowic do dietetyka, chce sie zabic teraz
-                    var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == p.Id).ToList();
-                    foreach (Lista_spotkan sp in spotkania)
-                    {
-                        s = new { id = sp.Spotkanie.Id, start_date = sp.Spotkanie.data_start, end_date = sp.Spotkanie.data_koniec, text = sp.Spotkanie.opis, color = sp.Spotkanie.color, @readonly = false };
 
-                        lista.Add(s);
-
-                    }
-                }
             }
             else
             {
-                
-                var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == id).ToList();
-                   foreach (Lista_spotkan sp in spotkania)
+                if (id == null || id == idZalogowanego) // dla trenerow i dietyetykow aby mogli edytowac
                 {
-                    //sp.Spotkanie.
-                    if(sp.status=="dostepne")
+                    id = idZalogowanego;
+                    var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == id).ToList();
+                    foreach (Lista_spotkan sp in spotkania)
+                    {
                         s = new { id = sp.Spotkanie.Id, start_date = sp.Spotkanie.data_start, end_date = sp.Spotkanie.data_koniec, text = sp.Spotkanie.opis, color = sp.Spotkanie.color, @readonly = false };
-                    else
-                    s = new { id = sp.Spotkanie.Id, start_date = sp.Spotkanie.data_start, end_date = sp.Spotkanie.data_koniec, text = sp.Spotkanie.opis, color = sp.Spotkanie.color, @readonly = true };
-                    lista.Add(s); 
-                    //apps.Add(sp.Spotkanie);
-                   
+                        lista.Add(s);
 
-
+                    }
                 }
+                else
+                { //id!=od idza
+                    var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == id).ToList();
 
+                    foreach (Lista_spotkan sp in spotkania)
+                    {
+                        s = new { id = sp.Spotkanie.Id, start_date = sp.Spotkanie.data_start, end_date = sp.Spotkanie.data_koniec, text = sp.Spotkanie.opis, color = sp.Spotkanie.color, @readonly = true };
+                        lista.Add(s);
 
+                    }
+                }
             }
             var data = new SchedulerAjaxData(lista);
             return data;

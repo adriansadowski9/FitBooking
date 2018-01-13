@@ -83,7 +83,7 @@ namespace FitBooking.Account
                 {
                     string code = manager.GenerateEmailConfirmationToken(user.Id);
                     string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
-                    manager.SendEmail(user.Id, "Potwierdź konto", "Potwierdź tworzenie konta klikając <a href=\"" + callbackUrl + "\">tutaj</a>.");
+                    manager.SendEmail(user.Id, "Potwierdź konto", "Potwierdź tworzenie konta klikając <a href=\"" + callbackUrl + "\"> tutaj </a>.");
 
                     FailureText.Text = "Wiadomość potwierdzająca adres email została wysłana. Sprwadź pocztę i potwierdź konto.";
                     ErrorMessage.Visible = true;
