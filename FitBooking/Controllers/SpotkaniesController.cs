@@ -14,11 +14,16 @@ using DHTMLX.Scheduler.Controls;
 using Newtonsoft.Json;
 using System.Net.Http;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Helpers;
+using System.Web.UI;
+using Microsoft.AspNet.Identity;
+using System.Net.Mail;
+using System.Text;
 
 namespace FitBooking.Controllers
 {
     [RoutePrefix("Kalendarz")]
-    public class SpotkaniesController : Controller
+    public class SpotkaniesController : Controller 
     {
         private Entities3 db = new Entities3();
         public static int? idl;
@@ -110,80 +115,117 @@ namespace FitBooking.Controllers
             //var idl = id;
             int? idZalogowanego = null;
             if (rolaUser() != null) idZalogowanego = getUser().Id;
-
-            if (rolaUser() == "klient" && id != null && id != idZalogowanego) // dla klienta i nie zalogowanego uzytkownika
+            if (rolaUser() == "klient" && id == null)
             {
-                kalendarz.klient = getUser();
-                kalendarz.funkcyjna = getUserID(id);
+                kalendarz.funkcyjna = getUser();
+                kalendarz.wlasciciel = true;
             }
-            if (rolaUser() == "trener" || rolaUser() == "dietetyk")
-            {
+           
 
-                if (idZalogowanego == id || id == null)
+                if (rolaUser() == "klient" && id != null && id != idZalogowanego) // dla klienta i nie zalogowanego uzytkownika
+                {
+                    kalendarz.klient = getUser();
+                    kalendarz.funkcyjna = getUserID(id);
+                }
+                if (rolaUser() == "trener" || rolaUser() == "dietetyk" || kalendarz.wlasciciel==false)
                 {
 
-                    scheduler.Lightbox.Add(new LightboxText("text", "Opis") { Height = 42, Focus = true });
-                    var select = new LightboxSelect("status", "status");
-                    var items = new List<object>(){
+                    if (idZalogowanego == id || id == null)
+                    {
+                        kalendarz.wlasciciel = true;
+                        scheduler.Lightbox.Add(new LightboxText("text", "Opis") { Height = 42, Focus = true });
+                        var select = new LightboxSelect("status", "status");
+                        var items = new List<object>(){
                          new { key = "dostepne", label = "dostepne" },
                          new { key = "zarezerwowane", label = "zarezerwowane"},
                          new { key = "inne", label = "inne" }
                         };
-                    select.AddOptions(items);
-                    scheduler.Lightbox.Add(select);
-                    scheduler.Lightbox.Add(new LightboxTime("time", "Data"));
-                    scheduler.Config.isReadonly = false;
-                    if (id == null)
-                    {
-                        kalendarz.funkcyjna = getUser();
-                        List<Spotkanie> pom = new List<Spotkanie>();
-                        var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
-                        foreach (Lista_spotkan sp in spotkania)
+                        select.AddOptions(items);
+                        scheduler.Lightbox.Add(select);
+                        scheduler.Lightbox.Add(new LightboxTime("time", "Data"));
+                        scheduler.Config.isReadonly = false;
+                        if (id == null)
                         {
-                            pom.Add(sp.Spotkanie);
+                            kalendarz.funkcyjna = getUser();
+                            List<Spotkanie> pom = new List<Spotkanie>();
+                            var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
+                            if (spotkania != null)
+                            {
+                                foreach (Lista_spotkan sp in spotkania)
+                                {
+                                    pom.Add(sp.Spotkanie);
+
+                                }
+                                kalendarz.lista = pom;
+                            }
+
 
                         }
-                        kalendarz.lista = pom;
+                        else
+                        {
+                            kalendarz.funkcyjna = getUserID(id);
+                            var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
+                            List<Spotkanie> pom = new List<Spotkanie>();
+                            if (spotkania != null)
+                            {
+                                foreach (Lista_spotkan sp in spotkania)
+                                {
+                                    pom.Add(sp.Spotkanie);
 
+                                }
+                                kalendarz.lista = pom;
+                            }
+
+
+
+                        }
 
                     }
                     else
                     {
                         kalendarz.funkcyjna = getUserID(id);
                         var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
-
-                        foreach (Lista_spotkan sp in spotkania)
+                        List<Spotkanie> pom = new List<Spotkanie>();
+                        if (spotkania != null)
                         {
-                            kalendarz.lista.Add(sp.Spotkanie);
+                            foreach (Lista_spotkan sp in spotkania)
+                            {
+                                pom.Add(sp.Spotkanie);
 
+                            }
+                            kalendarz.lista = pom;
                         }
-
-
                     }
+                }
+                else // czyli inny trener wchodzi na konto innego trenerea to co klient 
+                {
+                    kalendarz.funkcyjna = getUserID(id);
+
 
                 }
-            }
-            else // czyli inny trener wchodzi na konto innego trenerea to co klient 
-            {
-
-                scheduler.Config.readonly_form = true;
-            }
-
+            
+    
 
             idl = id;
             kalendarz.scheduler = scheduler;
 
-            var stands =
-       kalendarz.lista
-         .Where(s => s.color == "#baed91" && s.data_start > DateTime.Now)
-         .Select(s => new
-         {
-             Id = s.Id,
-             Description = string.Format("{0}-{1}", s.data_start.Value.ToString("MM/dd/yyyy HH:mm"), s.data_koniec.Value.TimeOfDay.ToString(@"hh\:mm"))
-         })
-         .ToList();
+            if (kalendarz.lista != null)
+            {
+                var stands =
+                kalendarz.lista
+               .Where(s => s.color == "#baed91" && s.data_start > DateTime.Now)
+               .Select(s => new
+               {
+                   Id = s.Id,
+                   Description = string.Format("{0}-{1}", s.data_start.Value.ToString("MM/dd/yyyy HH:mm"), s.data_koniec.Value.TimeOfDay.ToString(@"hh\:mm"))
+               })
+               .ToList();
+                if (stands.Count() != 0) ViewBag.spotkanieID = new SelectList(stands, "Id", "Description"); 
+                else kalendarz.lista = null; 
+            }
 
-            ViewBag.spotkanieID = new SelectList(stands, "Id", "Description");
+
+           // else ViewBag.spotkanieID = new SelectList();
 
 
             return View(kalendarz);
@@ -326,14 +368,47 @@ namespace FitBooking.Controllers
         [HttpPost]
         public ActionResult wyslij(FormCollection collection)
         {
-            
-            var c = collection[0];
-            var a = collection[1]; // wiadomosc
-            var b = collection[2]; //mejl klient
-            var s = collection[3]; //mej; funl
+               
+            var wiadomosc = collection["wiadomosc"];
+            var id = collection["klient"]; // wiadomosc
+            var mailFunkcyjny = collection["funkcyjna.AspNetUsers.Email"]; //mejl klient
+            var nazwisko = collection["funkcyjna.nazwisko"];
+            var imie = collection["funkcyjna.imie"];
+            string data;
+            string wiadomoscCz;
+            if (collection["spotkanieID"] != null)
+            {
+                int idSpotkania = Int32.Parse(collection["spotkanieID"]);
+                var spotkanie = db.Lista_spotkan.FirstOrDefault(x => x.id_spotkanie == idSpotkania);
+                data = string.Format("{0}-{1}", spotkanie.Spotkanie.data_start.Value.ToString("MM/dd/yyyy HH:mm"), spotkanie.Spotkanie.data_koniec.Value.TimeOfDay.ToString(@"hh\:mm"));
+                wiadomoscCz = ". Zarezerwował spotknie w terminie " + data;
+                var statusE = "zarezerwowane";
+                spotkanie.Spotkanie.color = changeColor(statusE);
+                spotkanie.status = statusE;
+                db.Entry(spotkanie).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            else wiadomoscCz = ". Pisze z zapytaniem o dodatkowy termin";
 
 
-            return View();
+               string body = "Witaj " +imie+" "+ nazwisko+"! "+"<br>"+"Masz nową rezerwacje w serwisie fitbooking od "
+               +collection["klientImieNazwisko"]+ wiadomoscCz+ 
+               ". Wiadomość od klienta: <br>" + "<i>"+wiadomosc+"</i> <br>" 
+               + "W celu dalszych kontaktów skontaktuj się z klientem: " + collection["klientMail"]
+               + "<br> <br> Pozdrawiamy, <br> Zespół Fitbooking";
+
+            WebMail.From="fitbookingacc@gmail.com";
+            WebMail.SmtpPort = 587;
+            WebMail.SmtpServer = "smtp.gmail.com";
+            WebMail.UserName = "fitbookingacc@gmail.com";
+            WebMail.Password = "Hejka123!";
+            WebMail.EnableSsl = true;
+            WebMail.Send(mailFunkcyjny, "Nowa rezerwacja", body);
+
+
+           
+
+            return Redirect("/Kalendarz/"); 
 
 
         }
