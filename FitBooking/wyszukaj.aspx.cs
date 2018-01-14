@@ -68,15 +68,18 @@ namespace FitBooking
 
                 foreach (UserRoleInfo user in listOfUsers)
                 {
-                    if (user.Roles.ElementAtOrDefault(0) != "administrator" && user.Roles.ElementAtOrDefault(0) != "klient")
+                    if (user.Roles.FirstOrDefault() != "administrator" && user.Roles.FirstOrDefault() != "klient")
                     {
                         Uzytkownik t = db.Uzytkownik.SingleOrDefault(k => k.id_aspUser == user.User.Id);
-                        Adres a = db.Adres.SingleOrDefault(k => k.id_uzytkownik == t.Id);
-                        ModelUserProfil m = new ModelUserProfil();
-                        m.user = t;
-                        m.adres = a;
-                        m.rola = user.Roles.ElementAtOrDefault(0);
-                        listaM.Add(m);
+                        if (t != null)
+                        {
+                            Adres a = db.Adres.SingleOrDefault(k => k.id_uzytkownik == t.Id);
+                            ModelUserProfil m = new ModelUserProfil();
+                            m.user = t;
+                            m.adres = a;
+                            m.rola = user.Roles.ElementAtOrDefault(0);
+                            listaM.Add(m);
+                        }
                     }
                 }
 
