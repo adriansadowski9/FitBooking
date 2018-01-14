@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using Microsoft.AspNet.Identity.EntityFramework;
 using FitBooking.CsScripts;
 using FitBooking.Models;
-
+using System.Globalization;
 
 namespace FitBooking
 {
@@ -20,17 +20,13 @@ namespace FitBooking
 
         private string szerokosc;
         private string dlugosc;
-        private double szerokoscDouble;
-        private double dlugoscDouble;
         private string typ;
         private string adres;
         private string htmlText;
         private string tempSzer;
         private string tempDlug;
-        private double tempSzerDoub;
-        private double tempDlugDoub;
         private int iloscWynikow = 0;
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(Request.QueryString["adres"]) && !String.IsNullOrEmpty(Request.QueryString["typwyszukania"]))
@@ -50,10 +46,6 @@ namespace FitBooking
 
                 szerokosc = (string)lat;
                 dlugosc = (string)lng;
-
-                szerokoscDouble = Convert.ToDouble(szerokosc.Replace('.', ','));
-                dlugoscDouble = Convert.ToDouble(dlugosc.Replace('.', ','));
-
 
                 /*var distance = new Coordinates(Convert.ToDouble(szerokosc), Convert.ToDouble(dlugosc))
                 .DistanceTo(new Coordinates(48.237867, 16.389477),UnitOfLength.Kilometers);*/
@@ -90,24 +82,15 @@ namespace FitBooking
 
                 foreach (var item in listaM)
                 {
-                    htmlText += item.adres.szerokosc + "<br>";
-                    htmlText += item.adres.dlugosc + "<br>";
-
                     tempSzer = item.adres.szerokosc;
                     tempDlug = item.adres.dlugosc;
 
-                    tempSzer = tempSzer.Replace('.', ',');
-                    tempDlug = tempDlug.Replace('.', ',');
-
-                    tempSzerDoub = Convert.ToDouble(tempSzer);
-                    tempDlugDoub = Convert.ToDouble(tempDlug);
-
-                    var distance = new Coordinates(tempSzerDoub,tempDlugDoub).DistanceTo(new Coordinates(szerokoscDouble, dlugoscDouble),UnitOfLength.Kilometers);
-                    htmlText += "<br>Distance: " + distance +"<br>";
-                    if ((distance < 20) && item.rola == typ)
+                    var distance = new Coordinates(Convert.ToDouble(tempSzer, CultureInfo.InvariantCulture), Convert.ToDouble(tempDlug, CultureInfo.InvariantCulture)).DistanceTo(new Coordinates(Convert.ToDouble(szerokosc, CultureInfo.InvariantCulture), Convert.ToDouble(dlugosc, CultureInfo.InvariantCulture)), UnitOfLength.Kilometers);
+                    if ((distance < 30) && item.rola == typ)
                     {
-                        htmlText += "Imie i nazwisko:" + item.user.imie + " " + item.user.nazwisko;
-                        htmlText += "</br>Profesja:" + item.rola;
+                        htmlText += "</br>Imie i nazwisko: " + item.user.imie + " " + item.user.nazwisko;
+                        htmlText += "</br>Profesja: " + item.rola;
+                        htmlText += "</br>Odległość: " + Math.Round(distance, 1) +" km";
                         iloscWynikow++;
                     }
                 }
