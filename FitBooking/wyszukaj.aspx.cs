@@ -59,14 +59,16 @@ namespace FitBooking
                                    select new UserRoleInfo() { User = u, Roles = query.ToList<string>() })
                          .ToList();
 
-                var trenerzy = listOfUsers.Where(x => x.Roles.ElementAtOrDefault(0) == "trener").ToList();
-                var dietetycy = listOfUsers.Where(x => x.Roles.ElementAtOrDefault(0) == "dietetyk").ToList();
+                List<UserRoleInfo> listaTyp = new List<UserRoleInfo>();
+                if (typ == "trener")
+                   listaTyp = listOfUsers.Where(x => x.Roles.ElementAtOrDefault(0) == "trener").ToList();
+                else listaTyp = listOfUsers.Where(x => x.Roles.ElementAtOrDefault(0) == "dietetyk").ToList();
 
-                List<Uzytkownik> listaTrener = new List<Uzytkownik>();
+              
                 List<ModelUserProfil> listaM = new List<ModelUserProfil>();
-                List<Uzytkownik> listaDietetyk = new List<Uzytkownik>();
+               
 
-                foreach (UserRoleInfo user in listOfUsers)
+                foreach (UserRoleInfo user in listaTyp)
                 {
                     if (user.Roles.FirstOrDefault() != "administrator" && user.Roles.FirstOrDefault() != "klient")
                     {
@@ -77,7 +79,7 @@ namespace FitBooking
                             ModelUserProfil m = new ModelUserProfil();
                             m.user = t;
                             m.adres = a;
-                            m.rola = user.Roles.ElementAtOrDefault(0);
+                            m.rola = user.Roles.FirstOrDefault(); 
                             listaM.Add(m);
                         }
                     }
@@ -92,7 +94,7 @@ namespace FitBooking
                     tempDlug = item.adres.dlugosc;
 
                     var distance = new Coordinates(Convert.ToDouble(tempSzer, CultureInfo.InvariantCulture), Convert.ToDouble(tempDlug, CultureInfo.InvariantCulture)).DistanceTo(new Coordinates(Convert.ToDouble(szerokosc, CultureInfo.InvariantCulture), Convert.ToDouble(dlugosc, CultureInfo.InvariantCulture)), UnitOfLength.Kilometers);
-                    if ((distance < 30) && item.rola == typ)
+                    if (distance < 30) 
                     {
                         iloscWynikow++;
                         wynik = item;

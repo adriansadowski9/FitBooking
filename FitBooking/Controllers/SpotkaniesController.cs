@@ -109,6 +109,7 @@ namespace FitBooking.Controllers
             scheduler.EnableDataprocessor = true;
             scheduler.UpdateFieldsAfterSave();
             scheduler.Config.isReadonly = true;
+            scheduler.Config.first_hour = 6;
 
 
             // scheduler.AfterInit.Add("block_readonly();");
