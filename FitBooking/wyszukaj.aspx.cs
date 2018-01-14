@@ -91,18 +91,10 @@ namespace FitBooking
                     var distance = new Coordinates(Convert.ToDouble(tempSzer, CultureInfo.InvariantCulture), Convert.ToDouble(tempDlug, CultureInfo.InvariantCulture)).DistanceTo(new Coordinates(Convert.ToDouble(szerokosc, CultureInfo.InvariantCulture), Convert.ToDouble(dlugosc, CultureInfo.InvariantCulture)), UnitOfLength.Kilometers);
                     if ((distance < 30) && item.rola == typ)
                     {
-                        
-                        htmlText += "</br>Imie i nazwisko: " + item.user.imie + " " + item.user.nazwisko;
-                        htmlText += "</br>Profesja: " + item.rola;
-                        htmlText += "</br>Odległość: " + Math.Round(distance, 1) +" km";
                         iloscWynikow++;
-
-
                         wynik = item;
                         wynik.dystans = distance; 
                         lista.Add(wynik);
-                        
-
                     }
                 }
 

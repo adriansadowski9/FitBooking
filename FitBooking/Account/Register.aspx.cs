@@ -26,7 +26,7 @@ namespace FitBooking.Account
                 manager.AddToRole(user.Id, Role.Text);
                 string code = manager.GenerateEmailConfirmationToken(user.Id);
                 string callbackUrl = IdentityHelper.GetUserConfirmationRedirectUrl(code, user.Id, Request);
-                manager.SendEmail(user.Id, "Potwierdź konto", "Potwierdź konto, klikając <a href=\"" + "\">tutaj</a>.");
+                manager.SendEmail(user.Id, "Potwierdź konto", "Potwierdź konto, klikając <a href=\"" + callbackUrl + "\">tutaj</a>.");
 
                 if (user.EmailConfirmed)
                 {
