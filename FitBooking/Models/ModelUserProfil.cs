@@ -11,8 +11,10 @@ namespace FitBooking.Models
         public Adres adres { get; set; }
         public Spolecznosc spolecznosc { get; set; }
         public String rola{ get; set; }
+        public double dystans { get; set; }
 
-        public virtual ICollection<ModelUserProfil> Model { get; set; }
+
+    public virtual ICollection<ModelUserProfil> Model { get; set; }
 
     }
 }

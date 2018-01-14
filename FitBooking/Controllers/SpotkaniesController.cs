@@ -98,7 +98,7 @@ namespace FitBooking.Controllers
             scheduler.Extensions.Add("../scheduler-client.js");
             // scheduler.AfterInit.Add("readonlyEvents();");
             scheduler.BeforeInit.Add("init();");
-            scheduler.BeforeInit.Add("readonlyEvents();");
+            //scheduler.BeforeInit.Add("readonlyEvents();");
             // scheduler.Extensions.Add("../scheduler-client.js");
             scheduler.BeforeInit.Add("scheduler.customConfiguration();");
             scheduler.Skin = DHXScheduler.Skins.Flat;
@@ -242,19 +242,20 @@ namespace FitBooking.Controllers
             var id = idl;
             dynamic s;
 
-            var u = db.AspNetUsers.SingleOrDefault(x => x.Email == User.Identity.Name);
-            Uzytkownik p = db.Uzytkownik.SingleOrDefault(k => k.id_aspUser == u.Id);
+          //  var u = db.AspNetUsers.SingleOrDefault(x => x.Email == User.Identity.Name);
+           // Uzytkownik p = db.Uzytkownik.SingleOrDefault(k => k.id_aspUser == u.Id);
             List<Spotkanie> apps = new List<Spotkanie>();
             List<dynamic> lista = new List<dynamic>(); ;
-            int? idZalogowanego = getUser().Id;
+           
 
 
 
 
             if (rolaUser() == "klient" && id == null) // kalendarz klienta 
             {
+                int? idZalogowanego = getUser().Id;
                 id = idZalogowanego;
-                var spotkania = db.Lista_spotkan.Where(x => x.id_klient == p.Id).ToList();
+                var spotkania = db.Lista_spotkan.Where(x => x.id_klient == getUser().Id).ToList();
                 foreach (Lista_spotkan sp in spotkania)
                 {
                     s = new { id = sp.Spotkanie.Id, start_date = sp.Spotkanie.data_start, end_date = sp.Spotkanie.data_koniec, text = sp.Spotkanie.opis, color = sp.Spotkanie.color, @readonly = false };
@@ -264,9 +265,13 @@ namespace FitBooking.Controllers
             }
             else
             {
+                 // int idpom=-1;
+                int? idZalogowanego = -1; 
+                if (rolaUser() != null) idZalogowanego = getUser().Id;
+                //int? idZalogowanego = getUser().Id;
                 if (id == null || id == idZalogowanego) // dla trenerow i dietyetykow aby mogli edytowac
                 {
-                    id = idZalogowanego;
+                    id = getUser().Id; 
                     var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == id).ToList();
                     foreach (Lista_spotkan sp in spotkania)
                     {
@@ -277,7 +282,7 @@ namespace FitBooking.Controllers
                 }
                 else
                 { //id!=od idza
-                    var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == id).ToList();
+                    var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == idl).ToList();
 
                     foreach (Lista_spotkan sp in spotkania)
                     {
@@ -407,8 +412,8 @@ namespace FitBooking.Controllers
 
 
            
-
-            return Redirect("/Kalendarz/"); 
+            
+            return Redirect("/All/"); 
 
 
         }

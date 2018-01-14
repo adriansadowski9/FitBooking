@@ -80,6 +80,9 @@ namespace FitBooking
                     }
                 }
 
+                ModelUserProfil wynik; 
+                List<ModelUserProfil> lista = new List<ModelUserProfil>(); ;
+
                 foreach (var item in listaM)
                 {
                     tempSzer = item.adres.szerokosc;
@@ -88,12 +91,35 @@ namespace FitBooking
                     var distance = new Coordinates(Convert.ToDouble(tempSzer, CultureInfo.InvariantCulture), Convert.ToDouble(tempDlug, CultureInfo.InvariantCulture)).DistanceTo(new Coordinates(Convert.ToDouble(szerokosc, CultureInfo.InvariantCulture), Convert.ToDouble(dlugosc, CultureInfo.InvariantCulture)), UnitOfLength.Kilometers);
                     if ((distance < 30) && item.rola == typ)
                     {
+                        
                         htmlText += "</br>Imie i nazwisko: " + item.user.imie + " " + item.user.nazwisko;
                         htmlText += "</br>Profesja: " + item.rola;
                         htmlText += "</br>Odległość: " + Math.Round(distance, 1) +" km";
                         iloscWynikow++;
+
+
+                        wynik = item;
+                        wynik.dystans = distance; 
+                        lista.Add(wynik);
+                        
+
                     }
                 }
+
+                ////TUUUUU 
+                List<ModelUserProfil> SortedList = lista.OrderBy(o => o.dystans).ToList();
+
+                foreach (var item in SortedList)
+                {
+                    htmlText += "</br>Imie i nazwisko: " + item.user.imie + " " + item.user.nazwisko;
+                    htmlText += "</br>Profesja: " + item.rola;
+                    htmlText += "</br>Odległość: " + Math.Round(item.dystans, 1) + " km";
+
+                }
+
+
+
+
 
                 if (iloscWynikow == 0)
                     htmlText += "Brak wyników";
@@ -103,6 +129,8 @@ namespace FitBooking
             {
                 Response.Redirect("~");
             }
+            
+
 
         }
         public string Szerokosc { get { return szerokosc; } }
