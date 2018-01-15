@@ -17,7 +17,7 @@ namespace FitBooking.Controllers
 
         // GET: Spolecznoscs
         [Route("")]
-       // [Authorize(Roles = "administrator")]
+       [Authorize(Roles = "administrator")]
         public ActionResult Index()
         {
             var spolecznosc = db.Spolecznosc.Include(s => s.Uzytkownik);

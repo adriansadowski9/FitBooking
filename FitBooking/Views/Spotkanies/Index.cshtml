@@ -1,53 +1,51 @@
-﻿@model FitBooking.Models.ModelCaledar
+﻿@model IEnumerable<Spotkanie>
 
 @{
-    ViewBag.Title = "Kalendarz";
-
+    ViewBag.Title = "Index";
 }
-@if (@Model.wlasciciel == false)
-{
-<h3 style="margin-left:100px">@Html.DisplayFor(model => model.funkcyjna.imie) @Html.DisplayFor(model => model.funkcyjna.nazwisko)</h3>
-}
-else { 
-    <h3 style="margin-left:100px">Mój kalendarz</h3>
-}
-<div style="height:700px;width:900px;margin:0 auto">
-   
-    @*@Html.Raw(Model.Render())*@
-    @Html.Raw(Model.scheduler.Render())
-</div>
-@*/@using (Html.BeginForm("", "Kalendarz", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{*@
 
+<h2>Spotkania</h2>
 
-@if (@Model.wlasciciel == false)
-{
-<form method="post" action="@Url.Action("Wyslij")">
-    <br />
-    <h4>Zarezerwuj termin</h4>
-    
-    @if(@Model.lista==null)
-    {
-        <p><i> Brak dostepnych terminow</i></p>
-        <p>Napisz wiadomość z zapytaniem o dodatkowy termin</p>
-    }
-    else
-    {
-        <b> <p>Wybierz termin</p></b>
-        <p>@Html.DropDownList("spotkanieID", "--Termin--")</p>
-    }
-    
-    <b><p>Podaj imię i nazwisko:</p></b>
-    <p> @Html.TextBox("klientImieNazwisko")</p>
-    <b> <p>Podaj email:</p></b>
-        <p> @Html.TextBox("klientMail")</p>
-    <b><p>Wiadomość</p></b>
-        <p>@Html.TextBox("wiadomosc", null, new { style = "width:300px; height:200px;  text-decoration: none; text-align: left; padding: 1px;" })</p>
-        @Html.HiddenFor(x => x.klient.Id, "klient")
-        @Html.HiddenFor(x => x.funkcyjna.AspNetUsers.Email)
-        @Html.HiddenFor(x => x.funkcyjna.imie)
-        @Html.HiddenFor(x => x.funkcyjna.nazwisko)
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.opis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.data_start)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.data_koniec)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.color)
+        </th>
+        <th></th>
+    </tr>
 
-        <input type="submit" value="Wyślij">
-</form>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.opis)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.data_start)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.data_koniec)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.color)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
 }
+
+</table>

@@ -11,13 +11,14 @@ using FitBooking.Models;
 namespace FitBooking.Controllers
 {
     [RoutePrefix("Role")]
-    [Authorize(Roles = "administrator")]
+    
     public class AspNetRolesController : Controller
     {
         private Entities3 db = new Entities3();
 
         // GET: AspNetRoles
         [Route("")]
+        [Authorize(Roles = "administrator")]
         public ActionResult Index()
         {
             return View(db.AspNetRoles.ToList());

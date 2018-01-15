@@ -1,0 +1,50 @@
+﻿@model Spotkanie
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Spotkanie</h4>
+    <hr />
+    <dl class="dl-horizontal">
+  
+
+        <dt>
+            @Html.DisplayNameFor(model => model.opis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.opis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.data_start)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.data_start)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.data_koniec)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.data_koniec)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

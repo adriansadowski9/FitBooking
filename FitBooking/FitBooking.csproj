@@ -642,6 +642,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\SpotkaniesController.cs" />
     <Compile Include="Controllers\TrenerzyController.cs" />
     <Compile Include="CsScripts\Coordinates.cs" />
     <Compile Include="Models\ModelCalendar.cs" />
@@ -674,7 +676,7 @@
     <Compile Include="Controllers\OpiniasController.cs" />
     <Compile Include="Controllers\Opinia_SzczegolyController.cs" />
     <Compile Include="Controllers\SpolecznoscController.cs" />
-    <Compile Include="Controllers\SpotkaniesController.cs" />
+    <Compile Include="Controllers\KalendarzController.cs" />
     <Compile Include="Controllers\UslugasController.cs" />
     <Compile Include="Controllers\UzytkownikHomeController.cs" />
     <Compile Include="Controllers\UzytkowniksController.cs" />
@@ -871,12 +873,18 @@
     <Content Include="Views\Konto\Konto.cshtml" />
     <Content Include="Views\UzytkownikHome\Index.cshtml" />
     <Content Include="Views\View.cshtml" />
+    <Content Include="Views\Kalendarz\Create.cshtml" />
+    <Content Include="Views\Kalendarz\Delete.cshtml" />
+    <Content Include="Views\Kalendarz\Details.cshtml" />
+    <Content Include="Views\Kalendarz\Edit.cshtml" />
+    <Content Include="Views\Kalendarz\Index.cshtml" />
+    <Content Include="Views\Trenerzy\Index.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Spotkanies\Create.cshtml" />
     <Content Include="Views\Spotkanies\Delete.cshtml" />
     <Content Include="Views\Spotkanies\Details.cshtml" />
     <Content Include="Views\Spotkanies\Edit.cshtml" />
     <Content Include="Views\Spotkanies\Index.cshtml" />
-    <Content Include="Views\Trenerzy\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Lista Spotkań</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -18,10 +18,10 @@
             @Html.DisplayNameFor(model => model.Spotkanie.opis)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Uzytkownik.imie)
+            @Html.DisplayNameFor(model => model.Uzytkownik.AspNetUsers.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Uzytkownik1.imie)
+            @Html.DisplayNameFor(model => model.Uzytkownik1.AspNetUsers.Email)
         </th>
         <th></th>
     </tr>
@@ -35,10 +35,10 @@
             @Html.DisplayFor(modelItem => item.Spotkanie.opis)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Uzytkownik.imie)
+            @Html.DisplayFor(modelItem => item.Uzytkownik.AspNetUsers.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Uzytkownik1.imie)
+            @Html.DisplayFor(modelItem => item.Uzytkownik1.AspNetUsers.Email)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
