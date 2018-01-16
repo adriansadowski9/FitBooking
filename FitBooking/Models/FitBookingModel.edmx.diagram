@@ -39,6 +39,8 @@
         <AssociationConnector Association="Model.FK_OpiniaSz_Uzytkownik" ManuallyRouted="false" />
         <AssociationConnector Association="Model.FK_Spolecznosc_Uzytkownik" ManuallyRouted="false" />
         <AssociationConnector Association="Model.AspNetUserRoles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Model.Info" Width="1.5" PointX="7.5" PointY="27.625" />
+        <AssociationConnector Association="Model.FK_Info_Uzytkonwnik" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

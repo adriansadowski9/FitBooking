@@ -17,6 +17,7 @@ public partial class Uzytkownik
         this.Lista_Uslug = new HashSet<Lista_Uslug>();
         this.Opinia_Szczegoly = new HashSet<Opinia_Szczegoly>();
         this.Spolecznosc = new HashSet<Spolecznosc>();
+        this.Info = new HashSet<Info>();
     }
 
     public int Id { get; set; }
@@ -55,4 +56,5 @@ public partial class Uzytkownik
     public virtual ICollection<Opinia_Szczegoly> Opinia_Szczegoly { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Spolecznosc> Spolecznosc { get; set; }
+    public virtual ICollection<Info> Info{ get; set; }
 }

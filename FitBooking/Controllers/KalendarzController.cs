@@ -124,7 +124,7 @@ namespace FitBooking.Controllers
             if (rolaUser() != null && rolaUser()!= "administrator") idZalogowanego = getUser().Id;
             if (rolaUser() == "klient" && id == null)
             {
-                kalendarz.funkcyjna = getUser();
+                kalendarz.klient = getUser();
                 kalendarz.wlasciciel = true;
             }
            
@@ -258,7 +258,7 @@ namespace FitBooking.Controllers
             {
                 int? idZalogowanego = getUser().Id;
                 id = idZalogowanego;
-                var spotkania = db.Lista_spotkan.Where(x => x.id_klient == getUser().Id).ToList();
+                var spotkania = db.Lista_spotkan.Where(x => x.id_klient == id).ToList();
                 foreach (Lista_spotkan sp in spotkania)
                 {
                     s = new { id = sp.Spotkanie.Id, start_date = sp.Spotkanie.data_start, end_date = sp.Spotkanie.data_koniec, text = sp.Spotkanie.opis, color = sp.Spotkanie.color, @readonly = false };
@@ -399,8 +399,13 @@ namespace FitBooking.Controllers
                 var statusE = "zarezerwowane";
                 spotkanie.Spotkanie.color = changeColor(statusE);
                 spotkanie.status = statusE;
+                if (rolaUser() == "klient") spotkanie.id_klient = getUser().Id; 
                 db.Entry(spotkanie).State = EntityState.Modified;
                 db.SaveChanges();
+
+               
+
+
             }
             else wiadomoscCz = ". Pisze z zapytaniem o dodatkowy termin";
 
@@ -418,7 +423,10 @@ namespace FitBooking.Controllers
             WebMail.Password = "Hejka123!";
             WebMail.EnableSsl = true;
             WebMail.Send(mailFunkcyjny, "Nowa rezerwacja", body);
-           
+
+       
+
+
             return Redirect("/All/"); 
         }
        

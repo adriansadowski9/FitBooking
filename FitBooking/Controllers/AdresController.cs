@@ -19,6 +19,7 @@ namespace FitBooking.Controllers
 
         // GET: Adres
         [Route("")]
+        [Authorize(Roles = "administrator")]
         public ActionResult Index()
         {
             var adres = db.Adres.Include(a => a.Uzytkownik);

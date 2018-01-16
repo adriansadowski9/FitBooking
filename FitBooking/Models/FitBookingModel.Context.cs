@@ -42,5 +42,6 @@ namespace FitBooking.Models
         public virtual DbSet<Spotkanie> Spotkanie { get; set; }
         public virtual DbSet<Usluga> Usluga { get; set; }
         public virtual DbSet<Uzytkownik> Uzytkownik { get; set; }
+        public virtual DbSet<Info> Info { get; set; }
     }
 }

@@ -79,6 +79,14 @@
           <Property Name="nazwa" Type="varchar" MaxLength="100" />
           <Property Name="opis" Type="varchar(max)" />
         </EntityType>
+        <EntityType Name="Info">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="oMnie" Type="varchar(max)" />
+          <Property Name="id_uzytkownik" Type="int" />
+        </EntityType>
         <EntityType Name="Kwalifikacja">
           <Key>
             <PropertyRef Name="Id" />
@@ -249,6 +257,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Info_Uzytkonwnik">
+          <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Info" Type="Self.Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Info">
+              <PropertyRef Name="id_uzytkownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Lista_dyscyplin_Dyscyplina">
           <End Role="Dyscyplina" Type="Self.Dyscyplina" Multiplicity="1" />
           <End Role="Lista_dyscyplin" Type="Self.Lista_dyscyplin" Multiplicity="*" />
@@ -413,6 +435,7 @@
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Dyscyplina" EntityType="Self.Dyscyplina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Info" EntityType="Self.Info" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Kwalifikacja" EntityType="Self.Kwalifikacja" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lista_dyscyplin" EntityType="Self.Lista_dyscyplin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Lista_kwalifikacji" EntityType="Self.Lista_kwalifikacji" Schema="dbo" store:Type="Tables" />
@@ -443,6 +466,10 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Info_Uzytkonwnik" Association="Self.FK_Info_Uzytkonwnik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Info" EntitySet="Info" />
           </AssociationSet>
           <AssociationSet Name="FK_Lista_dyscyplin_Dyscyplina" Association="Self.FK_Lista_dyscyplin_Dyscyplina">
             <End Role="Dyscyplina" EntitySet="Dyscyplina" />
@@ -702,6 +729,7 @@
           <NavigationProperty Name="Lista_Uslug" Relationship="Self.FK_Lista_Uslug_Uzytkownik" FromRole="Uzytkownik" ToRole="Lista_Uslug" />
           <NavigationProperty Name="Opinia_Szczegoly" Relationship="Self.FK_OpiniaSz_Uzytkownik" FromRole="Uzytkownik" ToRole="Opinia_Szczegoly" />
           <NavigationProperty Name="Spolecznosc" Relationship="Self.FK_Spolecznosc_Uzytkownik" FromRole="Uzytkownik" ToRole="Spolecznosc" />
+          <NavigationProperty Name="Info" Relationship="Model.FK_Info_Uzytkonwnik" FromRole="Uzytkownik" ToRole="Info" />
         </EntityType>
         <Association Name="FK_Adres_Uzytkownik">
           <End Role="Uzytkownik" Type="Self.Uzytkownik" Multiplicity="0..1" />
@@ -989,7 +1017,35 @@
             <End Role="AspNetRoles" EntitySet="AspNetRoles" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="Info" EntityType="Model.Info" />
+          <AssociationSet Name="FK_Info_Uzytkonwnik" Association="Model.FK_Info_Uzytkonwnik">
+            <End Role="Uzytkownik" EntitySet="Uzytkownik" />
+            <End Role="Info" EntitySet="Info" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Info">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="oMnie" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="id_uzytkownik" Type="Int32" />
+          <NavigationProperty Name="Uzytkownik" Relationship="Model.FK_Info_Uzytkonwnik" FromRole="Info" ToRole="Uzytkownik" />
+        </EntityType>
+        <Association Name="FK_Info_Uzytkonwnik">
+          <End Type="Model.Uzytkownik" Role="Uzytkownik" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="Model.Info" Role="Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Uzytkownik">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Info">
+              <PropertyRef Name="id_uzytkownik" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1187,6 +1243,15 @@
               <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Info">
+            <EntityTypeMapping TypeName="Model.Info">
+              <MappingFragment StoreEntitySet="Info">
+                <ScalarProperty Name="id_uzytkownik" ColumnName="id_uzytkownik" />
+                <ScalarProperty Name="oMnie" ColumnName="oMnie" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

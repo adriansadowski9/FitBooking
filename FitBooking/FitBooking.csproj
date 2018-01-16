@@ -643,9 +643,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\InfoesController.cs" />
     <Compile Include="Controllers\SpotkaniesController.cs" />
     <Compile Include="Controllers\TrenerzyController.cs" />
     <Compile Include="CsScripts\Coordinates.cs" />
+    <Compile Include="Models\Info.cs">
+      <DependentUpon>FitBookingModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ModelCalendar.cs" />
     <Compile Include="Models\UserRoleInfo.cs" />
     <Compile Include="wyszukaj.aspx.cs">
@@ -885,6 +889,11 @@
     <Content Include="Views\Spotkanies\Details.cshtml" />
     <Content Include="Views\Spotkanies\Edit.cshtml" />
     <Content Include="Views\Spotkanies\Index.cshtml" />
+    <Content Include="Views\Infoes\Create.cshtml" />
+    <Content Include="Views\Infoes\Delete.cshtml" />
+    <Content Include="Views\Infoes\Details.cshtml" />
+    <Content Include="Views\Infoes\Edit.cshtml" />
+    <Content Include="Views\Infoes\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
