@@ -153,7 +153,8 @@ namespace FitBooking.Controllers
                         };
                             select.AddOptions(items);
                             scheduler.Lightbox.Add(select);
-                            scheduler.Lightbox.Add(new LightboxTime("time", "Data"));
+                            scheduler.Lightbox.Add(new LightboxTime("time", "Data"));     
+                          
                             scheduler.Config.isReadonly = false;
                             if (id == null)
                             {

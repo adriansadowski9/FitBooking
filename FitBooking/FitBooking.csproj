@@ -222,6 +222,9 @@
     <Content Include="App_Data\aspnet-FitBooking-20171107114917_log.ldf">
       <DependentUpon>aspnet-FitBooking-20171107114917.mdf</DependentUpon>
     </Content>
+    <Content Include="Error.aspx" />
+    <Content Include="images\404_pl.png" />
+    <Content Include="images\sad.jpg" />
     <Content Include="Scripts\scheduler-client.js" />
     <Content Include="Scripts\scheduler.config.js" />
     <Content Include="profil.aspx" />
@@ -643,6 +646,13 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Error.aspx.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Error.aspx.designer.cs">
+      <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\InfoesController.cs" />
     <Compile Include="Controllers\SpotkaniesController.cs" />
