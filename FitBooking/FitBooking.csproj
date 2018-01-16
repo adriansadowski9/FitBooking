@@ -224,6 +224,7 @@
     </Content>
     <Content Include="Scripts\scheduler-client.js" />
     <Content Include="Scripts\scheduler.config.js" />
+    <Content Include="profil.aspx" />
     <Content Include="wyszukaj.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -652,6 +653,13 @@
     </Compile>
     <Compile Include="Models\ModelCalendar.cs" />
     <Compile Include="Models\UserRoleInfo.cs" />
+    <Compile Include="profil.aspx.cs">
+      <DependentUpon>profil.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="profil.aspx.designer.cs">
+      <DependentUpon>profil.aspx</DependentUpon>
+    </Compile>
     <Compile Include="wyszukaj.aspx.cs">
       <DependentUpon>wyszukaj.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -34,7 +34,7 @@ namespace FitBooking
                 adres = Request.QueryString["adres"];
                 typ = Request.QueryString["typwyszukania"];
                 string requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(adres));
-
+                try { 
                 WebRequest request = WebRequest.Create(requestUri);
                 WebResponse response = request.GetResponse();
                 XDocument xdoc = XDocument.Load(response.GetResponseStream());
@@ -46,6 +46,12 @@ namespace FitBooking
 
                 szerokosc = (string)lat;
                 dlugosc = (string)lng;
+                }
+
+                catch
+                {
+                    Response.Redirect(Request.RawUrl);
+                }
 
                 /*var distance = new Coordinates(Convert.ToDouble(szerokosc), Convert.ToDouble(dlugosc))
                 .DistanceTo(new Coordinates(48.237867, 16.389477),UnitOfLength.Kilometers);*/
