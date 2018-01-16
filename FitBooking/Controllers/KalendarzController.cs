@@ -120,52 +120,77 @@ namespace FitBooking.Controllers
             // scheduler.AfterInit.Add("block_readonly();");
             //var idl = id;
             int? idZalogowanego = null;
-            if(rolaUser()=="administrator") scheduler.Config.isReadonly = false;
-            if (rolaUser() != null && rolaUser()!= "administrator") idZalogowanego = getUser().Id;
-            if (rolaUser() == "klient" && id == null)
+            if (rolaUser() == null && id == null) kalendarz.wlasciciel = true;
+            else
             {
-                kalendarz.klient = getUser();
-                kalendarz.wlasciciel = true;
-            }
-           
-
-                if (rolaUser() == "klient" && id != null && id != idZalogowanego) // dla klienta i nie zalogowanego uzytkownika
                 {
-                    kalendarz.klient = getUser();
-                    kalendarz.funkcyjna = getUserID(id);
-                }
-                if (rolaUser() == "trener" || rolaUser() == "dietetyk" || kalendarz.wlasciciel==false || rolaUser() == "administrator" )
-                {
-
-                    if (idZalogowanego == id || id == null || rolaUser() == "administrator")
+                    if (rolaUser() == "administrator") scheduler.Config.isReadonly = false;
+                    if (rolaUser() != null && rolaUser() != "administrator") idZalogowanego = getUser().Id;
+                    if (rolaUser() == "klient" && id == null)
                     {
+                        kalendarz.klient = getUser();
                         kalendarz.wlasciciel = true;
-                        scheduler.Lightbox.Add(new LightboxText("text", "Opis") { Height = 42, Focus = true });
-                        var select = new LightboxSelect("status", "status");
-                        var items = new List<object>(){
+                    }
+
+
+                    if (rolaUser() == "klient" && id != null && id != idZalogowanego) // dla klienta i nie zalogowanego uzytkownika
+                    {
+                        kalendarz.klient = getUser();
+                        kalendarz.funkcyjna = getUserID(id);
+                    }
+                    if (rolaUser() == "trener" || rolaUser() == "dietetyk" || kalendarz.wlasciciel == false || rolaUser() == "administrator")
+                    {
+
+                        if (idZalogowanego == id || id == null || rolaUser() == "administrator")
+                        {
+                            kalendarz.wlasciciel = true;
+                            scheduler.Lightbox.Add(new LightboxText("text", "Opis") { Height = 42, Focus = true });
+                            var select = new LightboxSelect("status", "status");
+                            var items = new List<object>(){
                          new { key = "dostepne", label = "dostepne" },
                          new { key = "zarezerwowane", label = "zarezerwowane"},
                          new { key = "inne", label = "inne" }
                         };
-                        select.AddOptions(items);
-                        scheduler.Lightbox.Add(select);
-                        scheduler.Lightbox.Add(new LightboxTime("time", "Data"));
-                        scheduler.Config.isReadonly = false;
-                        if (id == null)
-                        {
-                            kalendarz.funkcyjna = getUser();
-                            List<Spotkanie> pom = new List<Spotkanie>();
-                            var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
-                            if (spotkania != null)
+                            select.AddOptions(items);
+                            scheduler.Lightbox.Add(select);
+                            scheduler.Lightbox.Add(new LightboxTime("time", "Data"));
+                            scheduler.Config.isReadonly = false;
+                            if (id == null)
                             {
-                                foreach (Lista_spotkan sp in spotkania)
+                                kalendarz.funkcyjna = getUser();
+
+                                List<Spotkanie> pom = new List<Spotkanie>();
+                                var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
+                                if (spotkania != null)
                                 {
-                                    pom.Add(sp.Spotkanie);
+                                    foreach (Lista_spotkan sp in spotkania)
+                                    {
+                                        pom.Add(sp.Spotkanie);
 
+                                    }
+                                    kalendarz.lista = pom;
                                 }
-                                kalendarz.lista = pom;
-                            }
 
+
+                            }
+                            else
+                            {
+                                kalendarz.funkcyjna = getUserID(id);
+                                var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
+                                List<Spotkanie> pom = new List<Spotkanie>();
+                                if (spotkania != null)
+                                {
+                                    foreach (Lista_spotkan sp in spotkania)
+                                    {
+                                        pom.Add(sp.Spotkanie);
+
+                                    }
+                                    kalendarz.lista = pom;
+                                }
+
+
+
+                            }
 
                         }
                         else
@@ -182,34 +207,17 @@ namespace FitBooking.Controllers
                                 }
                                 kalendarz.lista = pom;
                             }
-
-
-
                         }
-
                     }
-                    else
+                    else // czyli inny trener wchodzi na konto innego trenerea to co klient 
                     {
                         kalendarz.funkcyjna = getUserID(id);
-                        var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
-                        List<Spotkanie> pom = new List<Spotkanie>();
-                        if (spotkania != null)
-                        {
-                            foreach (Lista_spotkan sp in spotkania)
-                            {
-                                pom.Add(sp.Spotkanie);
 
-                            }
-                            kalendarz.lista = pom;
-                        }
+
                     }
                 }
-                else // czyli inny trener wchodzi na konto innego trenerea to co klient 
-                {
-                    kalendarz.funkcyjna = getUserID(id);
-
-
-                }
+            }
+           
             
     
 
