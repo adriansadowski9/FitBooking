@@ -2,13 +2,8 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <div style="text-align:center;">
-        Adres: <%=Adres %><br />
-        Szerokość geograficzna: <%=Szerokosc %><br />
-        Długość geograficzna: <%=Dlugosc %><br />
-        Typ wyszukania: <%=Typ %><br />
-        
-        Sprawdzamy:<br />
-        <%=HtmlText %><br />
+        <h2 style="text-align:center;margin-top:30px;">Wyszukiwanie <%=Typ %>a w promieniu 20 kilometrów</h2>
+        <%=HtmlText %>
 
 
     </div>

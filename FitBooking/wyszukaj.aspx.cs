@@ -61,12 +61,12 @@ namespace FitBooking
 
                 List<UserRoleInfo> listaTyp = new List<UserRoleInfo>();
                 if (typ == "trener")
-                   listaTyp = listOfUsers.Where(x => x.Roles.ElementAtOrDefault(0) == "trener").ToList();
+                    listaTyp = listOfUsers.Where(x => x.Roles.ElementAtOrDefault(0) == "trener").ToList();
                 else listaTyp = listOfUsers.Where(x => x.Roles.ElementAtOrDefault(0) == "dietetyk").ToList();
 
-              
+
                 List<ModelUserProfil> listaM = new List<ModelUserProfil>();
-               
+
 
                 foreach (UserRoleInfo user in listaTyp)
                 {
@@ -79,13 +79,13 @@ namespace FitBooking
                             ModelUserProfil m = new ModelUserProfil();
                             m.user = t;
                             m.adres = a;
-                            m.rola = user.Roles.FirstOrDefault(); 
+                            m.rola = user.Roles.FirstOrDefault();
                             listaM.Add(m);
                         }
                     }
                 }
 
-                ModelUserProfil wynik; 
+                ModelUserProfil wynik;
                 List<ModelUserProfil> lista = new List<ModelUserProfil>(); ;
 
                 foreach (var item in listaM)
@@ -94,39 +94,56 @@ namespace FitBooking
                     tempDlug = item.adres.dlugosc;
 
                     var distance = new Coordinates(Convert.ToDouble(tempSzer, CultureInfo.InvariantCulture), Convert.ToDouble(tempDlug, CultureInfo.InvariantCulture)).DistanceTo(new Coordinates(Convert.ToDouble(szerokosc, CultureInfo.InvariantCulture), Convert.ToDouble(dlugosc, CultureInfo.InvariantCulture)), UnitOfLength.Kilometers);
-                    if (distance < 30) 
+                    if (distance < 30)
                     {
                         iloscWynikow++;
                         wynik = item;
-                        wynik.dystans = distance; 
+                        wynik.dystans = distance;
                         lista.Add(wynik);
                     }
                 }
 
                 ////TUUUUU 
                 List<ModelUserProfil> SortedList = lista.OrderBy(o => o.dystans).ToList();
-
+                htmlText += "<div class='searchBoxes'>";
                 foreach (var item in SortedList)
                 {
-                    htmlText += "</br>Imie i nazwisko: " + item.user.imie + " " + item.user.nazwisko;
-                    htmlText += "</br>Profesja: " + item.rola;
-                    htmlText += "</br>Odległość: " + Math.Round(item.dystans, 1) + " km";
+                    htmlText += "<div class='containerSearchCard'>";
+                    htmlText += "<div class='img-container'>";
+                    if (typ == "trener")
+                        htmlText += "<img src='images/trainerIcon2.png'/>";
+                    else
+                        htmlText += "<img src='images/dietIcon.png'/>";
+                    htmlText += "</div>";
+                    htmlText += "<div class='contentSearchCard'>";
+                    htmlText += "<div class='titleSearchCard'>";
+                    htmlText += "  <p><a href='/profil?id=" + item.user.Id + "'>" + item.user.imie + " " + item.user.nazwisko + "</a></p>";
+                    if (typ == "trener")
+                        htmlText += "  <span>Trener personalny</span>";
+                    else
+                        htmlText += "  <span>Dietetyk</span>";
+                    htmlText += " </div>";
+                    htmlText += "<div class='distance'><img src='images/distance.png'/><br>";
+                    htmlText += Math.Round(item.dystans, 1) + " km </div>";
+
+                    htmlText += "  <div class='followSearchCard'><a href='/profil?id=" + item.user.Id + "'>Przejdz do profilu </a></div>";
+                    htmlText += " </div>";
+                    htmlText += " </div>";
+
 
                 }
-
-
-
-
+                htmlText += "</div>";
 
                 if (iloscWynikow == 0)
                     htmlText += "Brak wyników";
+
             }
 
             else
             {
                 Response.Redirect("~");
             }
-            
+
 
 
         }
