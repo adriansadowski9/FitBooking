@@ -8,23 +8,23 @@
 
 @if (@Model.wlasciciel == false)
 {
-<h3 style="margin-left:100px">@Html.DisplayFor(model => model.funkcyjna.imie) @Html.DisplayFor(model => model.funkcyjna.nazwisko)</h3>
+    <h3 style="margin-left:100px">@Html.DisplayFor(model => model.funkcyjna.imie) @Html.DisplayFor(model => model.funkcyjna.nazwisko)</h3>
 }
-else { 
+else
+{
     <h3 style="margin-left:100px">Mój kalendarz</h3>
 }
 <div style="height:700px;width:900px;margin:0 auto">
-   
+
     @*@Html.Raw(Model.Render())*@
     @Html.Raw(Model.scheduler.Render())
 </div>
 @*/@using (Html.BeginForm("", "Kalendarz", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{*@
+    {*@
 
 
-<div style="height:700px;width:900px;margin:0 auto">
-    @if (@Model.wlasciciel == false)
-            {
+@if (@Model.wlasciciel == false)
+{<div class="form-horizontal" style="text-align:center; margin: 0 auto;">
         <form method="post" action="@Url.Action("Wyslij")">
             <br />
             <h4>Zarezerwuj termin</h4>
@@ -32,27 +32,44 @@ else {
             @if (@Model.lista == null)
             {
                 <p><i> Brak dostepnych terminow</i></p>
-                        <p>Napisz wiadomość z zapytaniem o dodatkowy termin</p>
+                <p>Napisz wiadomość z zapytaniem o dodatkowy termin</p>
             }
             else
             {
-                <b> <p>Wybierz termin</p></b>
-                        <p>@Html.DropDownList("spotkanieID", "--Termin--")</p>
+                <div class="form-group">
+                    WYBIERZ TERMIN
+                    <div class="col-md-5 col-md-center">
+                        @Html.DropDownList("spotkanieID", (IEnumerable<SelectListItem>)ViewBag.PriorityID, new { @class = "form-control" })
+                    </div>
+                </div>
             }
-
-            <b><p>Podaj imię i nazwisko:</p></b>
-            <p> @Html.TextBox("klientImieNazwisko")</p>
-            <b> <p>Podaj email:</p></b>
-            <p> @Html.TextBox("klientMail")</p>
-            <b><p>Wiadomość</p></b>
-            <p>@Html.TextBox("wiadomosc", null, new { style = "width:300px; height:200px;  text-decoration: none; text-align: left; padding: 1px;" })</p>
+            <div class="form-group">
+                IMIĘ I NAZWISKO
+                <div class="col-md-5 col-md-center">
+                    @Html.TextBox("klientImieNazwisko", null, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                ADRES EMAIL
+                <div class="col-md-5 col-md-center">
+                    @Html.TextBox("klientMail", null, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                WIADOMOŚĆ
+                <div class="col-md-5 col-md-center">
+                    @Html.TextBox("wiadomosc", null, new { @class = "form-control", })
+                </div>
+            </div>
             @Html.HiddenFor(x => x.klient.Id, "klient")
             @Html.HiddenFor(x => x.funkcyjna.AspNetUsers.Email)
             @Html.HiddenFor(x => x.funkcyjna.imie)
             @Html.HiddenFor(x => x.funkcyjna.nazwisko)
-
-            <input type="submit" value="Wyślij">
+            <div class="form-group">
+                <div class="col-md-offset-5 col-md-5 col-md-center">
+                    <input type="submit" value="WYŚLIJ" class="btn-primaryS">
+                </div>
+            </div>
         </form>
-    }
-
     </div>
+}

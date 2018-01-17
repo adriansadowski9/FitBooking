@@ -34,18 +34,19 @@ namespace FitBooking
                 adres = Request.QueryString["adres"];
                 typ = Request.QueryString["typwyszukania"];
                 string requestUri = string.Format("http://maps.googleapis.com/maps/api/geocode/xml?address={0}&sensor=false", Uri.EscapeDataString(adres));
-                try { 
-                WebRequest request = WebRequest.Create(requestUri);
-                WebResponse response = request.GetResponse();
-                XDocument xdoc = XDocument.Load(response.GetResponseStream());
+                try
+                {
+                    WebRequest request = WebRequest.Create(requestUri);
+                    WebResponse response = request.GetResponse();
+                    XDocument xdoc = XDocument.Load(response.GetResponseStream());
 
-                XElement result = xdoc.Element("GeocodeResponse").Element("result");
-                XElement locationElement = result.Element("geometry").Element("location");
-                XElement lat = locationElement.Element("lat");
-                XElement lng = locationElement.Element("lng");
+                    XElement result = xdoc.Element("GeocodeResponse").Element("result");
+                    XElement locationElement = result.Element("geometry").Element("location");
+                    XElement lat = locationElement.Element("lat");
+                    XElement lng = locationElement.Element("lng");
 
-                szerokosc = (string)lat;
-                dlugosc = (string)lng;
+                    szerokosc = (string)lat;
+                    dlugosc = (string)lng;
                 }
 
                 catch
@@ -100,7 +101,7 @@ namespace FitBooking
                     tempDlug = item.adres.dlugosc;
 
                     var distance = new Coordinates(Convert.ToDouble(tempSzer, CultureInfo.InvariantCulture), Convert.ToDouble(tempDlug, CultureInfo.InvariantCulture)).DistanceTo(new Coordinates(Convert.ToDouble(szerokosc, CultureInfo.InvariantCulture), Convert.ToDouble(dlugosc, CultureInfo.InvariantCulture)), UnitOfLength.Kilometers);
-                    if (distance < 30)
+                    if (distance < 15)
                     {
                         iloscWynikow++;
                         wynik = item;
@@ -123,7 +124,7 @@ namespace FitBooking
                     htmlText += "</div>";
                     htmlText += "<div class='contentSearchCard'>";
                     htmlText += "<div class='titleSearchCard'>";
-                    htmlText += "  <p><a href='/profil?id=" + item.user.Id + "'>" + item.user.imie + " " + item.user.nazwisko + "</a></p>";
+                    htmlText += "  <h5><a href='/profil?id=" + item.user.Id + "'>" + item.user.imie + " " + item.user.nazwisko + "</a></h5>";
                     if (typ == "trener")
                         htmlText += "  <span>Trener personalny</span>";
                     else

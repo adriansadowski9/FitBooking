@@ -1,7 +1,7 @@
 <%@ Page Title="Potwierdzenie konta" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Confirm.aspx.cs" Inherits="FitBooking.Account.Confirm" Async="true" %>
 
 <asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <h3 style="text-align:center; margin-top:20px;">Potwierdzenie zakończone pomyślnie</h3>
+    <h3 style="text-align:center; margin-top:20px;">Potwierdzenie zakończone pomyślnie!</h3>
 
     <div>
         <asp:PlaceHolder runat="server" ID="successPanel" ViewStateMode="Disabled" Visible="true">

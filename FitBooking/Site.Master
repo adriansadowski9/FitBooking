@@ -14,10 +14,12 @@
         <%: Scripts.Render("~/Content/js") %>
     </asp:PlaceHolder>
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqP5ZE9AtLYKW3SLtCXP74nLlHuSBxFHY&libraries=places&language=pl"></script>
+
 </head>
 <body>
 
@@ -81,11 +83,11 @@
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
+        </div>
             <hr />
             <footer class="my-5 text-center">
         <p class="mb-2"><small>Copyright 2018 by Adrian Sadowski  Adrianna Zelek  Hubert Stencelewski<br />All rights Reserved</small></p>
     </footer>
             </form>
-        </div>
 </body>
 </html>
