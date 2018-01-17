@@ -34,7 +34,8 @@ namespace FitBooking.Controllers
             if (Request.IsAuthenticated == true)
             { 
                 var u = db.AspNetUsers.SingleOrDefault(x => x.Email == User.Identity.Name);
-                Uzytkownik p = db.Uzytkownik.SingleOrDefault(k => k.id_aspUser == u.Id);
+                Uzytkownik p = db.Uzytkownik.FirstOrDefault(k => k.id_aspUser == u.Id);
+                if (p == null) return null; 
                 return p;
             }
             else return null;
@@ -159,17 +160,23 @@ namespace FitBooking.Controllers
                             if (id == null)
                             {
                                 kalendarz.funkcyjna = getUser();
-
-                                List<Spotkanie> pom = new List<Spotkanie>();
-                                var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
-                                if (spotkania != null)
+                                if (kalendarz.funkcyjna == null)
                                 {
-                                    foreach (Lista_spotkan sp in spotkania)
+                                    return Redirect("/Uzytkownik/Create");
+                                }
+                                else
+                                {
+                                    List<Spotkanie> pom = new List<Spotkanie>();
+                                    var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
+                                    if (spotkania != null)
                                     {
-                                        pom.Add(sp.Spotkanie);
+                                        foreach (Lista_spotkan sp in spotkania)
+                                        {
+                                            pom.Add(sp.Spotkanie);
 
+                                        }
+                                        kalendarz.lista = pom;
                                     }
-                                    kalendarz.lista = pom;
                                 }
 
 
