@@ -11,7 +11,7 @@
                         <div class="col-md-6">
                             <h6>Profesja</h6>
                             <p>
-                                Trener/Dietetyk
+                                 <%=Rola %>
                             </p>
                             <h6>Miasto</h6>
                             <p>

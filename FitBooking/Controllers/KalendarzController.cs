@@ -443,7 +443,7 @@ namespace FitBooking.Controllers
        
 
 
-            return Redirect("/All/"); 
+            return Redirect("~/"); 
         }
        
 

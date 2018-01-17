@@ -26,10 +26,37 @@ namespace FitBooking
         string szerokosc;
         string dlugosc;
         int id;
+        string rola; 
         Uzytkownik user;
         Spolecznosc spolecznosc;
         Info info;
         Adres adres;
+
+        string rolaUser(Uzytkownik p)
+        {
+                ApplicationDbContext db1 = new ApplicationDbContext();
+                var listOfUsers = (from u in db1.Users
+                                   let query = (from ur in db1.Set<IdentityUserRole>()
+                                                where ur.UserId.Equals(u.Id)
+                                                join r in db1.Roles on ur.RoleId equals r.Id
+                                                select r.Name)
+                                   select new UserRoleInfo() { User = u, Roles = query.ToList<string>() })
+                                 .ToList();
+                //listOfUsers = listOfUsers.Where(x => x.Roles.FirstOrDefault() != "administrator").ToList();
+
+                foreach (UserRoleInfo user in listOfUsers)
+                {
+                    if (p != null)
+                    {
+                        if (p.id_aspUser == user.User.Id)
+                            return user.Roles.FirstOrDefault();
+                    }
+                    
+                }
+                return null;
+          
+        }
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -41,6 +68,8 @@ namespace FitBooking
                 spolecznosc = db.Spolecznosc.Where(x => x.id_uzytkownik == id).FirstOrDefault();
                 info = db.Info.Where(x => x.id_uzytkownik == id).FirstOrDefault();
                 adres = db.Adres.Where(x => x.id_uzytkownik == id).FirstOrDefault();
+
+                rola = rolaUser(user); 
 
                 if (spolecznosc != null)
                 {
@@ -91,6 +120,7 @@ namespace FitBooking
         public string Miasto { get { return miasto; } }
         public string Szerokosc { get { return szerokosc; } }
         public string Dlugosc { get { return dlugosc; } }
+        public string Rola { get { return rola; } }
     }
 
 }
