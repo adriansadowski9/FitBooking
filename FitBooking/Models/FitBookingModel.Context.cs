@@ -30,17 +30,9 @@ namespace FitBooking.Models
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<Dyscyplina> Dyscyplina { get; set; }
-        public virtual DbSet<Kwalifikacja> Kwalifikacja { get; set; }
-        public virtual DbSet<Lista_dyscyplin> Lista_dyscyplin { get; set; }
-        public virtual DbSet<Lista_kwalifikacji> Lista_kwalifikacji { get; set; }
         public virtual DbSet<Lista_spotkan> Lista_spotkan { get; set; }
-        public virtual DbSet<Lista_Uslug> Lista_Uslug { get; set; }
-        public virtual DbSet<Opinia> Opinia { get; set; }
-        public virtual DbSet<Opinia_Szczegoly> Opinia_Szczegoly { get; set; }
         public virtual DbSet<Spolecznosc> Spolecznosc { get; set; }
         public virtual DbSet<Spotkanie> Spotkanie { get; set; }
-        public virtual DbSet<Usluga> Usluga { get; set; }
         public virtual DbSet<Uzytkownik> Uzytkownik { get; set; }
         public virtual DbSet<Info> Info { get; set; }
     }

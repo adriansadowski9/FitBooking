@@ -125,6 +125,7 @@ namespace FitBooking.Controllers
             else
             {
                 {
+                    if(Request.IsAuthenticated == true && getUser() == null) return Redirect("/Uzytkownik/Create");
                     if (rolaUser() == null && id != null) kalendarz.niezalogowany = true; 
                     if (rolaUser() == "administrator") scheduler.Config.isReadonly = false;
                     if (rolaUser() != null && rolaUser() != "administrator") idZalogowanego = getUser().Id;
@@ -205,6 +206,7 @@ namespace FitBooking.Controllers
                         else
                         {
                             kalendarz.funkcyjna = getUserID(id);
+                            kalendarz.klient = getUser();
                             var spotkania = db.Lista_spotkan.Where(x => x.id_funkcyjna == kalendarz.funkcyjna.Id).ToList();
                             List<Spotkanie> pom = new List<Spotkanie>();
                             if (spotkania != null)
@@ -221,6 +223,7 @@ namespace FitBooking.Controllers
                     else // czyli inny trener wchodzi na konto innego trenerea to co klient 
                     {
                         kalendarz.funkcyjna = getUserID(id);
+                       
 
 
                     }
@@ -401,10 +404,17 @@ namespace FitBooking.Controllers
         {
                
             var wiadomosc = collection["wiadomosc"];
-            var id = collection["klient"]; // wiadomosc
-            var mailFunkcyjny = collection["funkcyjna.AspNetUsers.Email"]; //mejl klient
+            var id = collection["klient"]; 
+            var mailFunkcyjny = collection["funkcyjna.AspNetUsers.Email"]; 
             var nazwisko = collection["funkcyjna.nazwisko"];
             var imie = collection["funkcyjna.imie"];
+            var imieKlient = collection["klient.imie"];
+            var nazwiskoKlient = collection["klient.nazwisko"];
+            var mailKlient = collection["klient.AspNetUsers.Email"]; 
+            var telefonKlient = collection["klient.telefon"]; 
+
+
+
             string data;
             string wiadomoscCz;
             if (collection["spotkanieID"] != null)
@@ -428,10 +438,10 @@ namespace FitBooking.Controllers
 
 
                string body = "Witaj " +imie+" "+ nazwisko+"! "+"<br>"+"Masz nową rezerwacje w serwisie fitbooking od "
-               +collection["klientImieNazwisko"]+ wiadomoscCz+ 
+               +imieKlient+" "+nazwiskoKlient+ wiadomoscCz+ 
                ". Wiadomość od klienta: <br>" + "<i>"+wiadomosc+"</i> <br>" 
-               + "W celu dalszych kontaktów skontaktuj się z klientem: " + collection["klientMail"]
-               + "<br> <br> Pozdrawiamy, <br> Zespół Fitbooking";
+               + "W celu dalszych kontaktów skontaktuj się z klientem: " + mailKlient +", telefon: "+telefonKlient+
+               "<br> <br> Pozdrawiamy, <br> Zespół Fitbooking";
 
             WebMail.From="fitbookingacc@gmail.com";
             WebMail.SmtpPort = 587;

@@ -223,7 +223,7 @@
       <DependentUpon>aspnet-FitBooking-20171107114917.mdf</DependentUpon>
     </Content>
     <Content Include="Error.aspx" />
-    <Content Include="images\404_pl.png" />
+    <Content Include="images\legenda.png" />
     <Content Include="images\sad.jpg" />
     <Content Include="Scripts\scheduler-client.js" />
     <Content Include="Scripts\scheduler.config.js" />
@@ -690,17 +690,9 @@
     <Compile Include="Controllers\AspNetUserClaimsController.cs" />
     <Compile Include="Controllers\AspNetUserLoginsController.cs" />
     <Compile Include="Controllers\AspNetUsersController.cs" />
-    <Compile Include="Controllers\DyscyplinasController.cs" />
-    <Compile Include="Controllers\KwalifikacjasController.cs" />
-    <Compile Include="Controllers\Lista_dyscyplinController.cs" />
-    <Compile Include="Controllers\Lista_kwalifikacjiController.cs" />
     <Compile Include="Controllers\Lista_spotkanController.cs" />
-    <Compile Include="Controllers\Lista_UslugController.cs" />
-    <Compile Include="Controllers\OpiniasController.cs" />
-    <Compile Include="Controllers\Opinia_SzczegolyController.cs" />
     <Compile Include="Controllers\SpolecznoscController.cs" />
     <Compile Include="Controllers\KalendarzController.cs" />
-    <Compile Include="Controllers\UslugasController.cs" />
     <Compile Include="Controllers\UzytkownikHomeController.cs" />
     <Compile Include="Controllers\UzytkowniksController.cs" />
     <Compile Include="Default.aspx.cs">
@@ -728,9 +720,6 @@
     <Compile Include="Models\AspNetUsers.cs">
       <DependentUpon>FitBookingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Dyscyplina.cs">
-      <DependentUpon>FitBookingModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\FitBookingModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -747,35 +736,14 @@
       <DependentUpon>FitBookingModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Kwalifikacja.cs">
-      <DependentUpon>FitBookingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Lista_dyscyplin.cs">
-      <DependentUpon>FitBookingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Lista_kwalifikacji.cs">
-      <DependentUpon>FitBookingModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Lista_spotkan.cs">
       <DependentUpon>FitBookingModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Lista_Uslug.cs">
-      <DependentUpon>FitBookingModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ModelUserProfil.cs" />
-    <Compile Include="Models\Opinia.cs">
-      <DependentUpon>FitBookingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Opinia_Szczegoly.cs">
-      <DependentUpon>FitBookingModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Spolecznosc.cs">
       <DependentUpon>FitBookingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Spotkanie.cs">
-      <DependentUpon>FitBookingModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Usluga.cs">
       <DependentUpon>FitBookingModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Uzytkownik.cs">
@@ -838,68 +806,23 @@
     <Content Include="Views\AspNetUsers\Details.cshtml" />
     <Content Include="Views\AspNetUsers\Edit.cshtml" />
     <Content Include="Views\AspNetUsers\Index.cshtml" />
-    <Content Include="Views\Dyscyplinas\Create.cshtml" />
-    <Content Include="Views\Dyscyplinas\Delete.cshtml" />
-    <Content Include="Views\Dyscyplinas\Details.cshtml" />
-    <Content Include="Views\Dyscyplinas\Edit.cshtml" />
-    <Content Include="Views\Dyscyplinas\Index.cshtml" />
-    <Content Include="Views\Kwalifikacjas\Create.cshtml" />
-    <Content Include="Views\Kwalifikacjas\Delete.cshtml" />
-    <Content Include="Views\Kwalifikacjas\Details.cshtml" />
-    <Content Include="Views\Kwalifikacjas\Edit.cshtml" />
-    <Content Include="Views\Kwalifikacjas\Index.cshtml" />
-    <Content Include="Views\Lista_dyscyplin\Create.cshtml" />
-    <Content Include="Views\Lista_dyscyplin\Delete.cshtml" />
-    <Content Include="Views\Lista_dyscyplin\Details.cshtml" />
-    <Content Include="Views\Lista_dyscyplin\Edit.cshtml" />
-    <Content Include="Views\Lista_dyscyplin\Index.cshtml" />
-    <Content Include="Views\Lista_kwalifikacji\Create.cshtml" />
-    <Content Include="Views\Lista_kwalifikacji\Delete.cshtml" />
-    <Content Include="Views\Lista_kwalifikacji\Details.cshtml" />
-    <Content Include="Views\Lista_kwalifikacji\Edit.cshtml" />
-    <Content Include="Views\Lista_kwalifikacji\Index.cshtml" />
     <Content Include="Views\Lista_spotkan\Create.cshtml" />
     <Content Include="Views\Lista_spotkan\Delete.cshtml" />
     <Content Include="Views\Lista_spotkan\Details.cshtml" />
     <Content Include="Views\Lista_spotkan\Edit.cshtml" />
     <Content Include="Views\Lista_spotkan\Index.cshtml" />
-    <Content Include="Views\Lista_Uslug\Create.cshtml" />
-    <Content Include="Views\Lista_Uslug\Delete.cshtml" />
-    <Content Include="Views\Lista_Uslug\Details.cshtml" />
-    <Content Include="Views\Lista_Uslug\Edit.cshtml" />
-    <Content Include="Views\Lista_Uslug\Index.cshtml" />
-    <Content Include="Views\Opinias\Create.cshtml" />
-    <Content Include="Views\Opinias\Delete.cshtml" />
-    <Content Include="Views\Opinias\Details.cshtml" />
-    <Content Include="Views\Opinias\Edit.cshtml" />
-    <Content Include="Views\Opinias\Index.cshtml" />
-    <Content Include="Views\Opinia_Szczegoly\Create.cshtml" />
-    <Content Include="Views\Opinia_Szczegoly\Delete.cshtml" />
-    <Content Include="Views\Opinia_Szczegoly\Details.cshtml" />
-    <Content Include="Views\Opinia_Szczegoly\Edit.cshtml" />
-    <Content Include="Views\Opinia_Szczegoly\Index.cshtml" />
     <Content Include="Views\Spolecznosc\Create.cshtml" />
     <Content Include="Views\Spolecznosc\Delete.cshtml" />
     <Content Include="Views\Spolecznosc\Details.cshtml" />
     <Content Include="Views\Spolecznosc\Edit.cshtml" />
     <Content Include="Views\Spolecznosc\Index.cshtml" />
-    <Content Include="Views\Uslugas\Create.cshtml" />
-    <Content Include="Views\Uslugas\Delete.cshtml" />
-    <Content Include="Views\Uslugas\Details.cshtml" />
-    <Content Include="Views\Uslugas\Edit.cshtml" />
-    <Content Include="Views\Uslugas\Index.cshtml" />
     <Content Include="Views\Uzytkowniks\Create.cshtml" />
     <Content Include="Views\Uzytkowniks\Delete.cshtml" />
     <Content Include="Views\Uzytkowniks\Details.cshtml" />
     <Content Include="Views\Uzytkowniks\Edit.cshtml" />
     <Content Include="Views\Uzytkowniks\Index.cshtml" />
     <Content Include="Views\Konto\Konto.cshtml" />
-    <Content Include="Views\UzytkownikHome\Index.cshtml" />
     <Content Include="Views\View.cshtml" />
-    <Content Include="Views\Kalendarz\Create.cshtml" />
-    <Content Include="Views\Kalendarz\Delete.cshtml" />
-    <Content Include="Views\Kalendarz\Details.cshtml" />
-    <Content Include="Views\Kalendarz\Edit.cshtml" />
     <Content Include="Views\Kalendarz\Index.cshtml" />
     <Content Include="Views\Trenerzy\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
@@ -913,6 +836,7 @@
     <Content Include="Views\Infoes\Details.cshtml" />
     <Content Include="Views\Infoes\Edit.cshtml" />
     <Content Include="Views\Infoes\Index.cshtml" />
+    <Content Include="Views\UzytkownikHome\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

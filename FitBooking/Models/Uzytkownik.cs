@@ -10,12 +10,8 @@ public partial class Uzytkownik
     public Uzytkownik()
     {
         this.Adres = new HashSet<Adres>();
-        this.Lista_dyscyplin = new HashSet<Lista_dyscyplin>();
-        this.Lista_kwalifikacji = new HashSet<Lista_kwalifikacji>();
         this.Lista_spotkan = new HashSet<Lista_spotkan>();
         this.Lista_spotkan1 = new HashSet<Lista_spotkan>();
-        this.Lista_Uslug = new HashSet<Lista_Uslug>();
-        this.Opinia_Szczegoly = new HashSet<Opinia_Szczegoly>();
         this.Spolecznosc = new HashSet<Spolecznosc>();
         this.Info = new HashSet<Info>();
     }
@@ -41,19 +37,10 @@ public partial class Uzytkownik
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Adres> Adres { get; set; }
     public virtual AspNetUsers AspNetUsers { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<Lista_dyscyplin> Lista_dyscyplin { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<Lista_kwalifikacji> Lista_kwalifikacji { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Lista_spotkan> Lista_spotkan { get; set; }
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Lista_spotkan> Lista_spotkan1 { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<Lista_Uslug> Lista_Uslug { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-    public virtual ICollection<Opinia_Szczegoly> Opinia_Szczegoly { get; set; }
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
     public virtual ICollection<Spolecznosc> Spolecznosc { get; set; }
     public virtual ICollection<Info> Info{ get; set; }
 }
