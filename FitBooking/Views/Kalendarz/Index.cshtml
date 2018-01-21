@@ -19,57 +19,67 @@ else
     @*@Html.Raw(Model.Render())*@
     @Html.Raw(Model.scheduler.Render())
 </div>
-@*/@using (Html.BeginForm("", "Kalendarz", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {*@
 
 
-@if (@Model.wlasciciel == false)
-{<div class="form-horizontal" style="text-align:center; margin: 0 auto;">
-        <form method="post" action="@Url.Action("Wyslij")">
-            <br />
-            <h4>Zarezerwuj termin</h4>
+@if (@Model.niezalogowany == true)
+{
+    <div class="form-horizontal" style="text-align:center; margin: 50px auto;">
+        <p> @Html.ActionLink("Zaloguj się", "Login", "Account") aby zarezerwować termin</p>
+        </div>
 
-            @if (@Model.lista == null)
-            {
-                <p><i> Brak dostepnych terminow</i></p>
-                <p>Napisz wiadomość z zapytaniem o dodatkowy termin</p>
-            }
-            else
-            {
+
+        }
+        else
+        {
+        if (@Model.wlasciciel == false)
+        {
+        <div class="form-horizontal" style="text-align:center; margin: 0 auto;">
+            <form method="post" action="@Url.Action("Wyslij")">
+                <br />
+                <h4>Zarezerwuj termin</h4>
+
+                @if (@Model.lista == null)
+                {
+                    <p><i> Brak dostepnych terminow</i></p>
+                    <p>Napisz wiadomość z zapytaniem o dodatkowy termin</p>
+                }
+                else
+                {
+                    <div class="form-group">
+                        WYBIERZ TERMIN
+                        <div class="col-md-5 col-md-center">
+                            @Html.DropDownList("spotkanieID", (IEnumerable<SelectListItem>)ViewBag.PriorityID, new { @class = "form-control" })
+                        </div>
+                    </div>
+                }
                 <div class="form-group">
-                    WYBIERZ TERMIN
+                    IMIĘ I NAZWISKO
                     <div class="col-md-5 col-md-center">
-                        @Html.DropDownList("spotkanieID", (IEnumerable<SelectListItem>)ViewBag.PriorityID, new { @class = "form-control" })
+                        @Html.TextBox("klientImieNazwisko", null, new { @class = "form-control" })
                     </div>
                 </div>
-            }
-            <div class="form-group">
-                IMIĘ I NAZWISKO
-                <div class="col-md-5 col-md-center">
-                    @Html.TextBox("klientImieNazwisko", null, new { @class = "form-control" })
+                <div class="form-group">
+                    ADRES EMAIL
+                    <div class="col-md-5 col-md-center">
+                        @Html.TextBox("klientMail", null, new { @class = "form-control" })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                ADRES EMAIL
-                <div class="col-md-5 col-md-center">
-                    @Html.TextBox("klientMail", null, new { @class = "form-control" })
+                <div class="form-group">
+                    WIADOMOŚĆ
+                    <div class="col-md-5 col-md-center">
+                        @Html.TextBox("wiadomosc", null, new { @class = "form-control", })
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                WIADOMOŚĆ
-                <div class="col-md-5 col-md-center">
-                    @Html.TextBox("wiadomosc", null, new { @class = "form-control", })
+                @Html.HiddenFor(x => x.klient.Id, "klient")
+                @Html.HiddenFor(x => x.funkcyjna.AspNetUsers.Email)
+                @Html.HiddenFor(x => x.funkcyjna.imie)
+                @Html.HiddenFor(x => x.funkcyjna.nazwisko)
+                <div class="form-group">
+                    <div class="col-md-offset-5 col-md-5 col-md-center">
+                        <input type="submit" value="WYŚLIJ" class="btn-primaryS">
+                    </div>
                 </div>
-            </div>
-            @Html.HiddenFor(x => x.klient.Id, "klient")
-            @Html.HiddenFor(x => x.funkcyjna.AspNetUsers.Email)
-            @Html.HiddenFor(x => x.funkcyjna.imie)
-            @Html.HiddenFor(x => x.funkcyjna.nazwisko)
-            <div class="form-group">
-                <div class="col-md-offset-5 col-md-5 col-md-center">
-                    <input type="submit" value="WYŚLIJ" class="btn-primaryS">
-                </div>
-            </div>
-        </form>
-    </div>
-}
+            </form>
+        </div>
+        }
+        }

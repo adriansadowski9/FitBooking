@@ -10,8 +10,15 @@
                     <div class="row">
                         <div class="col-md-6">
                             <h6>Profesja</h6>
-                            <p>
-                                 <%=Rola %>
+                            <p> <% if (Rola == "trener")
+                                {
+                                        %>
+                                Trener personalny <%}
+                            else{%>
+                                Dietetyk <%} %>
+
+
+                                 
                             </p>
                             <h6>Miasto</h6>
                             <p>
@@ -19,11 +26,12 @@
                             </p>
                         </div>
                         <div class="col-md-12">
-                            <h5 class="mt-2" style="float:right;">O mnie</h5>
+                            <h5 class="mt-2" style="float:left;">O mnie</h5>
                         </div>
-                        <div class="col-md-12" style="text-align:center;">
+                        <div class="col-md-12" style="text-align:left;">
                             <%=OMnie %>
                             </div>
+                        <br /> 
                         <div class="col-md-12" style="margin: 0 auto;">
                             <h5 class="mt-2" style="float:left;">Obszar pracy</h5>
                             <div id="map_canvas" style="margin-bottom:15px; width: 620px; height: 250px;"></div>

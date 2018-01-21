@@ -17,7 +17,6 @@ public partial class Adres
 {
     public int Id { get; set; }
     [Required(ErrorMessage = "Proszę wprowadzić ulicę")]
-    [RegularExpression(@"^[0-9A-ZĄĘŁŃÓŚŹŻ]+[0-9a-zA-ZąćęłńóśźżĄĘŁŃÓŚŹŻ.''-'\s]*$", ErrorMessage = "Błąd, wyrażenie powinno składać się tylko z liter")]
     public string ulica { get; set; }
     [DisplayName("numer domu")]
     [Required(ErrorMessage = "Proszę wprowadzić numer domu")]

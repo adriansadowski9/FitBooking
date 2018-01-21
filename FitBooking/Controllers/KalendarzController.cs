@@ -125,6 +125,7 @@ namespace FitBooking.Controllers
             else
             {
                 {
+                    if (rolaUser() == null && id != null) kalendarz.niezalogowany = true; 
                     if (rolaUser() == "administrator") scheduler.Config.isReadonly = false;
                     if (rolaUser() != null && rolaUser() != "administrator") idZalogowanego = getUser().Id;
                     if (rolaUser() == "klient" && id == null)

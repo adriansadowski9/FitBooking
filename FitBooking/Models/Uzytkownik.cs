@@ -22,10 +22,9 @@ public partial class Uzytkownik
 
     public int Id { get; set; }
     [Required(ErrorMessage = "Proszê wprowadziæ imiê")]
-    [RegularExpression(@"^[A-Z¥Ê£ÑÓŒ¯]+[a-zA-Z¹æê³ñóœŸ¿¥Ê£ÑÓŒ¯''-'\s]*$", ErrorMessage = "B³¹d, wyra¿enie powinno sk³adaæ siê tylko z liter")]
+    [MinLength(2, ErrorMessage = "Imie powinno miec wiecej niz dwa znaki")]
     public string imie { get; set; }
     [Required(ErrorMessage = "Proszê wprowadziæ nazwisko")]
-    [RegularExpression(@"^[A-Z¥Ê£ÑÓŒ¯]+[a-zA-Z¹æê³ñóœŸ¿¥Ê£ÑÓŒ¯''-'\s]*$", ErrorMessage = "B³¹d, wyra¿enie powinno sk³adaæ siê tylko z liter")]
     public string nazwisko { get; set; }
     [Required(ErrorMessage = "Proszê wybraæ datê urodzenia")]
     [DisplayName("data urodzenia")]

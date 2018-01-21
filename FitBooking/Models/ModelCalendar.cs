@@ -13,6 +13,7 @@ namespace FitBooking.Models
         public DHXScheduler scheduler { get; set; }
         public List <Spotkanie> lista { get; set; }
         public Boolean wlasciciel { get; set; } = false;
+        public Boolean niezalogowany { get; set; } = false;
         public int select { get; set; }
         //public virtual ICollection<ModelCaledar> Model { get; set; }
 
