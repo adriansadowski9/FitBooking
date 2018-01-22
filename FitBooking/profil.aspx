@@ -8,7 +8,8 @@
                 <div class="tab-pane active" id="profile" >
                     <h5 class="mb-3" style="font-weight:500;"><%=User.imie %> <%=User.nazwisko %></h5>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
+                            <div class="col-md-6" style="float:left;">
                             <h6>Profesja</h6>
                             <p> <% if (Rola == "trener")
                                 {
@@ -24,6 +25,10 @@
                             <p>
                                 <%=Miasto %>
                             </p>
+                            </div>
+                            <div class="col-md-6" style="float:right;">
+                                <a class="btn-primaryS" style="margin-top:40px;float:right;" href='/Kalendarz?id=<%=User.Id%>'>Umów się na spotkanie</a>
+                                </div>
                         </div>
                         <div class="col-md-12">
                             <h5 class="mt-2" style="float:left;">O mnie</h5>
@@ -66,7 +71,6 @@
                                 }
                                 initialize();    </script>
                         </div>
-                        <a class="btn-primaryS" style="margin: 0 auto;" href='/Kalendarz?id=<%=User.Id%>'>Umów się na spotkanie</a>
 
                     </div>
                     <!--/row-->

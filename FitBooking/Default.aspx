@@ -47,13 +47,13 @@
         <div class="col-md-6">
             <div class="top5">
             <h3 style="text-align:center;">Najlepsi dietetycy</h3>
-            <div class="best1st"><img src="../images/basicDiet.png" /><br /><span>Jan Kowalski</span></div>
+            <div class="best1st"><img src="../images/basicDiet.png" /><br /><span>Jadwiga Królewicz</span></div>
                 <hr />
                 <div class="best">
-                <img src="../images/basicDiet.png" /><span>Jan Kowalski</span><br /><br />
-                <img src="../images/basicDiet.png" /><span>Jan Kowalski</span><br /><br />
-                <img src="../images/basicDiet.png" /><span>Jan Kowalski</span><br /><br />
-                <img src="../images/basicDiet.png" /><span>Jan Kowalski</span><br /><br />
+                <img src="../images/basicDiet.png" /><span>Jadwiga Królewicz</span><br /><br />
+                <img src="../images/basicDiet.png" /><span>Jadwiga Królewicz</span><br /><br />
+                <img src="../images/basicDiet.png" /><span>Jadwiga Królewicz</span><br /><br />
+                <img src="../images/basicDiet.png" /><span>Jadwiga Królewicz</span><br /><br />
                 </div>
             <p style="text-align:center; margin-top: 12px;">
                 <a class="btn-primaryS" runat="server" href="~/">PEŁNY RANKING</a>

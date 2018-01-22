@@ -17,8 +17,6 @@ else
 <div style="height:700px;width:900px;margin:0 auto">
     
         <img src="../images/legenda.png" style="margin-left: 900px;margin-top:100px; position:absolute" />
-    
-  
         @Html.Raw(Model.scheduler.Render())
     </div>
 
@@ -43,7 +41,7 @@ else
                 @if (@Model.lista == null)
                 {
                     <p><i> Brak dostepnych terminow</i></p>
-                    <p>Napisz wiadomość z zapytaniem o dodatkowy termin</p>
+                    <p>Skontaktuj się w sprawie dostępności terminów:</p>
                 }
                 else
                 {
@@ -57,18 +55,22 @@ else
                 <div class="form-group">
                     <div class="col-md-5 col-md-center">
                        W celu dalszego kontaktu <b>@Html.DisplayFor(model => model.funkcyjna.imie)  @Html.DisplayFor(model => model.funkcyjna.nazwisko) </b>
-                        dostanie Twoje dane: <br />
-                        IMIĘ I NAZWISKO <i> @Html.DisplayFor(model => model.klient.imie) @Html.DisplayFor(model => model.klient.nazwisko) </i>
-                        
+                        uzyska Twoje dane: <br />
+                        IMIĘ I NAZWISKO <b><br /><i> @Html.DisplayFor(model => model.klient.imie) @Html.DisplayFor(model => model.klient.nazwisko) </i></b>
+
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-5 col-md-center">
-                        ADRES EMAIL: <i> @Html.DisplayFor(model => model.klient.AspNetUsers.Email)</i> <br />
-                        TELEFON: <i> @Html.DisplayFor(model => model.klient.telefon)</i><br />
+                        ADRES EMAIL<br /><b> <i> @Html.DisplayFor(model => model.klient.AspNetUsers.Email)</i> <br /></b>
                     </div>
-                    <p style="font-size:small"><i>  Dane możesz zmienić w @Html.ActionLink("panelu użytkownika", "Manage", "Account")</i></p>   
                     </div>
+                <div class="form-group">
+                    <div class="col-md-5 col-md-center">
+                        TELEFON <br /><b><i> @Html.DisplayFor(model => model.klient.telefon)</i><br /></b>
+                    </div>
+                </div>
+                <p style="font-size:small"><i>  Dane możesz zmienić w @Html.ActionLink("panelu użytkownika", "Manage", "Account")</i></p>
 
 
                 <div class="form-group">

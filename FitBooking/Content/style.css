@@ -412,6 +412,10 @@ header {
     width: 100%;
 }
 
+.tableDane th{
+    width:33%;
+}
+
     .tableDane span {
         font-weight: normal;
         font-size: 14px;
